@@ -1,0 +1,44 @@
+@import "./../../../styles/variables";
+
+.requests-table {
+    background-color: $form-white-background;
+    table-layout: fixed;
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 2.5rem;
+
+    .requests-table-header {
+        th {
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+            font-weight: $fontWeightSemiBold;
+            font-size: $font-size-semi-small;
+            border-bottom: 1px solid $border-color;
+        }
+        .request-name-header {
+            width: 32%;
+            padding-left: 2rem;
+        }
+        .assigned-to-header {
+            width: 15%;
+        }
+        .last-updated-header {
+            width: 15%;
+        }
+        .stage-header {
+            width: 10%;
+        }
+        .status-header {
+            width: 20%;
+            text-align: center;
+        }
+        .actions-header {
+            width: 8%;
+            text-align: center;
+        }
+    }
+}
+
+@media (max-width: 61rem) {
+    
+}

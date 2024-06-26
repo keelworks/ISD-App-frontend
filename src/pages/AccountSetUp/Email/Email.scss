@@ -1,0 +1,15 @@
+@import '../../../styles/variables';
+
+.account-setup {
+    .form-title {
+        font-size: $font-size-regular !important;
+        margin-bottom: $font-size-small !important;
+    }
+
+    .form-subtitle {
+        color: $font-color-grey;
+        font-size: $font-size-semi-regular;
+        font-weight: $fontWeightMedium;
+        margin-bottom: $font-size-large;
+    }
+}

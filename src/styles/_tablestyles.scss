@@ -1,0 +1,257 @@
+@import './variables';
+
+.table-main {
+	color: #000;
+	font-family: 'Inter', system-ui, Avenir, Helvetica, Arial, sans-serif;
+	height: 100vh;
+	width: 100vw;
+	background-color: $default-background;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	box-sizing: border-box;
+	margin: 0;
+}
+
+.table-container {
+	max-width: 76rem;
+	width: 100%;
+	margin: 6.813rem auto 0;
+}
+
+.table-container table {
+	border-collapse: collapse;
+}
+
+// Headers
+.table-header-container {
+	display: flex;
+	font-size: $font-size-semi-regular;
+	font-weight: $fontWeightMedium;
+	line-height: 28px;
+	padding: 1.25rem 1.5rem;
+}
+
+.table-header-row {
+	border-bottom: 1px solid var(--Gray-200, #eaecf0);
+	background: var(--Gray-50, #f9fafb);
+	width: 100%;
+
+	th {
+		padding: 0.75rem 1.5rem;
+		text-align: left;
+		align-items: center;
+
+		color: var(--Gray-500, #667085);
+		font-size: $font-size-extra-small;
+		font-weight: $fontWeightMedium;
+		line-height: 18px;
+		white-space: nowrap;
+		vertical-align: middle;
+	}
+}
+
+// Body
+
+.table-container tbody {
+	width: 100%;
+	overflow: auto;
+}
+
+.table-body-row {
+	border-bottom: 1px solid var(--Gray-200, #eaecf0);
+}
+
+.td-cell {
+	padding: 1rem 1.5rem;
+	text-align: left;
+	align-items: center;
+
+	color: var(--Gray-500, #667085);
+	font-size: 14px;
+	font-weight: $fontWeightRegular;
+	line-height: 20px;
+	white-space: nowrap;
+	vertical-align: middle;
+}
+
+.edit-input {
+	width: 100%;
+	height: 2rem;
+}
+
+.add-teammates {
+	position: relative;
+	display: flex;
+	padding: 1.25rem 1.5rem;
+	width: 100%;
+	align-items: center;
+	align-self: stretch;
+
+	border: 0px solid var(--Gray-200, #eaecf0);
+
+	color: #0774c3;
+	font-size: $font-size-small;
+	font-style: normal;
+	font-weight: $fontWeightBold;
+	line-height: 140%;
+	transform-origin: 0.3s;
+
+	cursor: pointer;
+	user-select: none;
+}
+
+.add-teammates-text {
+	max-width: 50px;
+	white-space: nowrap;
+
+	&:hover {
+		opacity: 0.7;
+	}
+
+	&:active {
+		color: #053e67;
+	}
+}
+
+// Status and icons
+
+.status {
+	font-size: $font-size-extra-small;
+	font-style: normal;
+	font-weight: $fontWeightMedium;
+	line-height: 18px;
+	user-select: none;
+}
+
+.status-icon {
+	max-width: 4.063rem;
+	width: 100%;
+	display: flex;
+	padding: 0.125rem 0.3125rem 0.125rem 0.3125rem;
+	justify-content: center;
+
+	box-sizing: content-box;
+	align-items: center;
+	gap: 6px;
+
+	border-radius: 16px;
+
+	span {
+		font-size: $font-size-regular; /* Adjust the size as needed */
+	}
+}
+
+.active-status {
+	background: var(--Success-50, #ecfdf3);
+	color: var(--Success-700, #027a48);
+
+	span {
+		color: #12b76a;
+	}
+}
+
+.inactive-status {
+	background: #e3f2fe;
+	color: #0774c3;
+
+	span {
+		color: #44a9f1;
+	}
+}
+
+.name {
+	color: var(--Gray-900, #101828);
+}
+
+.icon-container {
+	text-align: center;
+}
+
+.edit,
+.delete {
+	cursor: pointer;
+	transition-duration: 0.3s;
+
+	&:hover {
+		opacity: 0.7;
+	}
+
+	&:active {
+		opacity: 0.5;
+	}
+}
+
+.delete {
+	margin-right: 1.5rem;
+}
+
+// Media Queries
+
+@media (max-width: 80rem) {
+	.table-container {
+		width: 95%;
+		margin: 6.813rem 3vw 0 3vw;
+	}
+}
+
+@media (max-width: 60rem) {
+	.td-cell {
+		padding: 1rem 0.5rem;
+	}
+
+	.table-header-row {
+		th {
+			padding: 0.75rem 0.5rem;
+		}
+	}
+
+	.table-header-container {
+		padding: 1.25rem 0.5rem;
+	}
+
+	.add-teammates {
+		padding: 1.25rem 0.5rem;
+	}
+}
+
+@media (max-width: 40.313rem) {
+	.status-icon {
+		padding: 0.125rem;
+
+		box-sizing: border-box;
+
+		span {
+			font-size: 1rem; /* Adjust the size as needed */
+		}
+	}
+}
+
+@media (max-width: 35.438rem) {
+	.table-main {
+		width: 100%;
+	}
+
+	.table-container {
+		overflow-y: auto;
+		min-width: 600px;
+	}
+}
+
+/* Column Resizer Option */
+.header {
+	position: relative;
+}
+
+.resizer {
+	position: absolute;
+	z-index: 999;
+	top: 0;
+	right: -1px;
+	height: 100%;
+	width: 2px;
+	background: rgba(0, 0, 0, 0.1);
+	cursor: col-resize !important;
+	user-select: none;
+	touch-action: none;
+}

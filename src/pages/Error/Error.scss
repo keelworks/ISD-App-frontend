@@ -1,0 +1,52 @@
+.body-container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+}
+
+.error-container {
+  margin: 0 auto;
+  padding: 2rem 3rem;
+  max-width: 800px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  place-content: center;
+}
+
+.error-title,
+.error-paragraph {
+  color: black;
+  margin-bottom: 3rem;
+}
+
+.home-link {
+  margin-top: 2rem;
+  font-size: 24px;
+  text-decoration: none;
+  color: #007bff;
+  transition: color 0.3s;
+}
+.home-link:hover {
+  color: #0056b3;
+}
+
+@media (max-width: 768px) {
+  .error-container {
+    padding: 1rem 2rem;
+  }
+
+  .error-title {
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .error-paragraph {
+    font-size: 1rem;
+    margin-bottom: 1.3rem;
+  }
+  .home-link {
+    margin-top: 0.5rem;
+  }
+}

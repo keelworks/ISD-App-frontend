@@ -1,0 +1,139 @@
+@import '../../styles/variables';
+
+.form-container {
+	.form {
+		.button-container {
+			position: relative;
+			margin-top: 1rem;
+			max-width: 38rem;
+			width: 100%;
+			display: flex;
+			flex-direction: column;
+			justify-content: flex-start;
+			align-items: center;
+
+			.button {
+				display: flex;
+				cursor: pointer;
+				justify-content: center;
+				align-items: center;
+				align-self: stretch;
+				min-height: 2.875rem;
+				height: 100%;
+				border-radius: 0.25rem;
+				color: $font-color-white;
+				font-size: $font-size-small;
+				font-style: normal;
+				font-weight: $fontWeightSemiBold;
+				line-height: normal;
+				transition-duration: 0.3s;
+				box-sizing: border-box;
+				padding: 12px 0px;
+
+				&:disabled {
+					background-color: #808080 !important;
+					color: #fff !important;
+					cursor: not-allowed !important;
+				}
+			}
+
+			.google-login {
+				display: flex;
+				padding: 1rem;
+				justify-content: center;
+				align-items: center;
+				align-self: stretch;
+				gap: $font-size-small;
+				border-radius: 9999px;
+				border: 2px solid #e2e8f0;
+				color: #1e293b;
+				font-feature-settings: 'clig' off, 'liga' off;
+				font-family: 'Figtree', system-ui, Avenir, Helvetica, Arial,
+					sans-serif;
+				font-size: 1rem;
+				font-style: normal;
+				font-weight: 500;
+				line-height: 24px;
+				letter-spacing: -0.24px;
+				margin-bottom: 3rem;
+
+				&:hover {
+					background-color: #e2e8f0;
+				}
+
+				&:active {
+					background-color: #cfd8e3;
+				}
+			}
+
+			.google-icon {
+				margin-right: 1rem;
+			}
+
+			span,
+			.back-to-login {
+				font-size: $font-size-small;
+				font-weight: $fontWeightSemiBold;
+				line-height: 24px;
+				a {
+					font-weight: $fontWeightSemiBold;
+				}
+			}
+
+			span {
+				margin: 2rem 0rem 2rem 0rem;
+			}
+
+			.back-to-login {
+				margin: 0rem 0rem 2rem 0rem;
+				display: flex;
+				p {
+					margin: 0px;
+				}
+			}
+
+			.signup {
+				background-color: $button-blue-background;
+
+				&:hover {
+					background-color: darken($button-blue-background, 10%);
+				}
+
+				&:active {
+					background-color: #044a80;
+					box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2);
+				}
+			}
+
+			.login {
+				background-color: rgba(204, 204, 204, 0.4);
+
+				&:hover {
+					background-color: darken(rgba(204, 204, 204, 0.4), 10%);
+				}
+
+				&:active {
+					box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2);
+				}
+			}
+		}
+
+		.loading-message,
+		.success-message,
+		.error-message {
+			position: absolute;
+			top: 70%;
+			left: 0;
+			width: 100%;
+			text-align: center;
+		}
+
+		.success-message {
+			color: green;
+		}
+
+		.error-message {
+			color: rgb(203, 21, 21);
+		}
+	}
+}

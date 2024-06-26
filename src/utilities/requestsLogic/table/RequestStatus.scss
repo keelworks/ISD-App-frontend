@@ -1,0 +1,22 @@
+@import "./../../../styles/variables";
+
+.request-status {
+    padding: 0.375rem 1rem;
+    border-radius: 1.875rem;
+
+    font-weight: $fontWeightSemiBold;
+    font-size: $font-size-extra-small;
+    display: inline-block;
+}
+
+.grey {
+    background-color: $status-grey;
+}
+
+.green {
+    background-color: $status-green;
+}
+
+.orange {
+    background-color: $status-orange;
+}

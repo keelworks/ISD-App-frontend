@@ -1,0 +1,44 @@
+.body-container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+}
+
+.error {
+  color: red;
+}
+
+.course-request-form-container {
+  margin: 0 auto;
+  padding: 2rem 3rem;
+  max-width: 800px;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid white;
+  align-items: center;
+  background-color: white;
+  place-content: center;
+}
+.title {
+  color: black;
+}
+label {
+  color: black;
+  margin-bottom: 0.25rem;
+}
+input {
+  width: 500px;
+  height: 2rem;
+}
+
+.description {
+  width: 500px;
+  color: black;
+}
+
+.btn-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

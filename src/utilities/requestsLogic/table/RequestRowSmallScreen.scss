@@ -1,0 +1,66 @@
+@import "./../../../styles/variables";
+
+.request-row-small {
+    background-color: $form-white-background;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    padding: 2.25rem 2.5rem;
+    border-bottom: 1px solid $border-color;
+
+    &:first-child {
+        margin-top: 2.5rem;
+    }
+
+    .request-name {
+        grid-column: 1 / span 3;
+        font-weight: $fontWeightSemiBold;
+        font-size: $font-size-half-regular;
+    }
+    .status {
+        justify-self: end;
+    }
+    .assigned-to, .stage {
+        grid-column: 2 / span 3;
+    }
+    .last-updated-header, .last-updated {
+        grid-column: 1 / span 4;
+    }
+
+    .assigned-to-header {
+        padding-top: 2.5rem;
+    }
+
+    .assigned-to {
+        padding-top: 2.5rem;
+    }
+
+    .stage-header {
+        padding-top: 0.75rem;
+    }
+
+    .stage {
+        padding-top: 0.75rem;
+    }
+
+    .last-updated-header {
+        padding-top: 3.4rem;
+        font-weight: $fontWeightMedium;
+        font-size: $font-size-extra-small;
+    }
+
+    .assigned-to-header, .stage-header {
+        font-weight: $fontWeightRegular;
+        font-size: $font-size-semi-small;
+    }
+
+    .assigned-to, .stage {
+        font-weight: $fontWeightSemiBold;
+        font-size: $font-size-semi-small;
+    }
+
+    .last-updated {
+        padding-top: 0.75rem;
+        font-weight: $fontWeightSemiBold;
+        font-size: $font-size-small;
+    }
+}

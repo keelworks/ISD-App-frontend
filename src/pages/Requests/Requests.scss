@@ -1,0 +1,43 @@
+@import '../../styles/variables';
+
+.requests-wrapper {
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  
+
+  .isd-dashboard-wrapper {
+    width: 100%;
+    background-color: $form-white-background;
+  }
+
+  .isd-dashboard, .requests-container {
+    width: 80%;
+    margin: auto;
+    color: $font-color-black;
+
+    display: flex;
+  }
+
+  .isd-dashboard {
+    justify-content: space-between;
+    align-items: center;
+    height: 5rem;
+    
+    h1 {
+      font-weight: $fontWeightBold;
+      font-size: $font-size-regular;
+    }
+  }
+
+  .requests-container {
+    margin-top: 2.5rem;
+    flex-direction: column;
+
+    .requests-title {
+      font-weight: $fontWeightBold;
+      font-size: 2rem;
+    }
+  }
+  
+}

@@ -1,0 +1,114 @@
+@import './variables';
+
+.form-container {
+	color: $font-color-black;
+	font-family: 'Inter', system-ui, Avenir, Helvetica, Arial, sans-serif;
+	height: 100vh;
+	width: 100vw;
+	background-color: $default-background;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	.form {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		background-color: $form-white-background;
+		width: 42.95vw;
+		padding: 3rem 7.5rem;
+		border-radius: 0.5rem;
+
+		fieldset {
+			max-width: 611px;
+			width: 100%;
+			position: relative;
+
+			p {
+				font-size: 0.8rem;
+				color: rgb(203, 21, 21);
+				font-weight: $fontWeightBold;
+				visibility: visible;
+				height: 1px;
+				text-align: center;
+				margin-bottom: 16px;
+			}
+		}
+	}
+
+	.form-title {
+		font-size: $font-size-large;
+		font-weight: $fontWeightMedium;
+		margin-bottom: $font-size-large;
+	}
+
+	.form-input {
+		label {
+			display: block;
+			font-weight: $fontWeightMedium;
+			font-size: 0.875rem;
+		}
+		input {
+			margin-top: 0.5rem;
+			width: 100%;
+			min-height: 3rem;
+			height: 100%;
+			border-radius: 0.25rem;
+			border: 1px solid var(--Black-20, rgba(17, 17, 19, 0.2));
+			box-sizing: border-box;
+			font-weight: $fontWeightRegular;
+			padding: 0.8125rem 1rem;
+			font-size: $font-size-small;
+		}
+	}
+}
+
+@media (max-width: 127rem) {
+	.form-container {
+		.form {
+			width: 75vw;
+			max-width: 55rem;
+		}
+	}
+}
+
+@media (max-width: 60rem) {
+	.form-container {
+		.form {
+			padding: 3rem 13vw;
+		}
+	}
+}
+
+@media (max-width: 40rem) {
+	.form-container {
+		.form {
+			.button-container {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				flex-direction: column;
+				margin-top: 2.5rem;
+				.loading-message,
+				.success-message,
+				.error-message {
+					top: 66%;
+				}
+				.back-to-login {
+					text-wrap: nowrap;
+					display: flex;
+					align-items: center;
+					flex-direction: column;
+					margin: 0;
+				}
+				.google-icon {
+					margin-right: 0rem;
+				}
+				.google-login div span {
+					display: none;
+				}
+			}
+		}
+	}
+}

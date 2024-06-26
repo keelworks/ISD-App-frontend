@@ -1,0 +1,89 @@
+@import '../../../styles/variables';
+
+.isd-flow-form {
+    padding: 2rem 1.5rem 3rem;
+    background-color: $form-white-background;
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+
+    .form-title {
+        font-size: $font-size-regular;
+        font-weight: $fontWeightSemiBold;
+    }
+
+    .field-title {
+        font-weight: $fontWeightSemiBold;
+        font-size: $font-size-small;
+        margin-bottom: 1rem;
+    }
+
+    .field-text {
+        font-size: $font-size-semi-small;
+        font-weight: $fontWeightRegular;
+        color: $font-color-darker-grey;
+    }
+
+    .form-input {
+        label {
+            font-size: $font-size-semi-small;
+            font-weight: $fontWeightMedium;
+            margin-bottom: 0.5rem;
+        }
+
+        input, textarea {
+            width: 100%;
+			border: 1px solid var(--Black-20, rgba(17, 17, 19, 0.2));
+			box-sizing: border-box;
+			font-weight: $fontWeightRegular;
+			font-size: $font-size-small;
+        }
+
+        input {
+            border-radius: 0.25rem;
+			min-height: 3rem;
+			height: 100%;
+            padding: 0.8125rem 1rem;
+        }
+
+        input:disabled{
+            color: $font-color-one-more-grey;
+        }
+
+        textarea {
+            border-radius: 0.5rem;
+            padding: 0.625rem 0.875rem;
+            resize: none;
+        }
+    }
+
+    .button-container {
+        .button {
+            float: right;
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            border-radius: 0;
+            font-weight: $fontWeightBold;
+            font-size: $font-size-small;
+        }
+        .cancel {
+            background-color: $form-white-background;
+
+            &:hover {
+                border-color: $current-menu-step-background;
+            }
+        }
+        .next {
+            color: $font-color-white;
+            background-color: $button-blue-background;
+
+            &:hover {
+					background-color: darken($button-blue-background, 10%);
+				}
+        }
+        .back{
+            color: $font-color-black;
+            background-color: $default-background;
+        }
+    }
+}

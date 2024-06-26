@@ -1,0 +1,33 @@
+@import "./../../../styles/variables";
+
+.request-row {
+    border-bottom: 1px solid $border-color;
+    td {
+        padding-top: 2.125rem;
+        padding-bottom: 2.125rem;
+    }
+
+    .request-name {
+        font-weight: $fontWeightSemiBold;
+        font-size: $font-size-semi-regular;
+        padding-left: 2rem;
+    }
+
+    .assigned-to, .last-updated, .stage {
+        font-weight: $fontWeightRegular;
+        font-size: $font-size-semi-small;
+    }
+
+    .status {
+        text-align: center;
+    }
+
+    .actions {
+        text-align: center;
+    }
+
+    .action-dots::after {
+        content: '\2807';
+        font-size: 2rem;
+    }
+}

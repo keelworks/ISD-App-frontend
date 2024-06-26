@@ -1,0 +1,16 @@
+@import '../../styles/variables';
+
+.login {
+	fieldset:not(:first-of-type) {
+		margin-top: 1rem;
+	}
+
+	.button {
+		border-radius: 0.25rem;
+		color: $font-color-white;
+		font-size: $font-size-small;
+		font-weight: $fontWeightSemiBold;
+		max-width: 611px;
+		width: 100%;
+	}
+}

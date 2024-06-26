@@ -1,0 +1,56 @@
+@import 'src/styles/variables';
+
+
+.invitation-input {
+  label {
+    display: block;
+    font-weight: $fontWeightMedium;
+    font-size: 0.875rem;
+    
+  }
+  input {
+    width: 250px;
+    min-height: 3rem;
+    height: 100%;
+    border-radius: 0.25rem;
+    border: 1px solid var(--Black-20, rgba(17, 17, 19, 0.2));
+    box-sizing: border-box;
+    font-weight: $fontWeightRegular;
+    padding: 0.8125rem 1rem;
+    font-size: $font-size-small;
+    margin-right: 2rem;
+  }
+  .email-role-container{
+    display:flex;
+    justify-content: space-around;
+    
+  }
+  .select{
+    height: 48px; 
+    width: 250px;
+  
+  }
+  
+  @media screen and (max-width: 960px){
+  
+    .email-role-container{
+      display:flex;
+      flex-direction: column;
+    
+    }
+    input{
+      margin-right: 0;
+      width: 250px;
+      
+    }
+    .select{
+      width: 100%;
+      margin-top: -3rem;
+      margin-bottom: 2rem;
+    }
+  }
+
+}
+
+
+
