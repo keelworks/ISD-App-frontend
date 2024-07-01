@@ -2,6 +2,7 @@ import "./RequestsTable.scss";
 import RequestRow from "./RequestRow";
 import RequestRowSmallScreen from "./RequestRowSmallScreen";
 import { useState, useEffect } from "react";
+import { statuses } from "./statuses";
 
 let info = [
   {
@@ -39,6 +40,20 @@ const sortedInfo = info.sort(
   (a, b) => new Date(b.lastUpdated) - new Date(a.lastUpdated)
 );
 
+//find requests that need review:
+const noReviewRequests = [];
+const needReviewRequests = sortedInfo.filter((r) => {
+  if (
+    r.status == "qaReview" ||
+    r.status == "supervisorReview" ||
+    r.status == "stakeholderReview"
+  ) {
+    return r;
+  } else {
+    noReviewRequests.push(r);
+  }
+});
+
 const RequestsTable = () => {
   const [width, setWidth] = useState(window.innerWidth);
 
@@ -56,11 +71,22 @@ const RequestsTable = () => {
 
   if (width < 1000) {
     return (
-      <section className="requests-table-small">
-        {sortedInfo.map((request, index) => (
-          <RequestRowSmallScreen key={index} request={request} />
-        ))}
-      </section>
+      <>
+        {needReviewRequests.length > 0 && (
+          <section className="requests-table-small need-review">
+            {needReviewRequests.map((request, index) => (
+              <RequestRowSmallScreen key={index} request={request} />
+            ))}
+          </section>
+        )}
+        {noReviewRequests.length > 0 && (
+          <section className="requests-table-small">
+            {noReviewRequests.map((request, index) => (
+              <RequestRowSmallScreen key={index} request={request} />
+            ))}
+          </section>
+        )}
+      </>
     );
   }
   return (
@@ -75,8 +101,18 @@ const RequestsTable = () => {
           <th className="actions-header">Actions</th>
         </tr>
       </thead>
+      {needReviewRequests.length > 0 && (
+        <tbody className="need-review">
+          {needReviewRequests.map((request, index) => (
+            <RequestRow key={index} request={request} />
+          ))}
+          <tr className="table-gap">
+            <td colSpan={6}></td>
+          </tr>
+        </tbody>
+      )}
       <tbody>
-        {sortedInfo.map((request, index) => (
+        {noReviewRequests.map((request, index) => (
           <RequestRow key={index} request={request} />
         ))}
       </tbody>

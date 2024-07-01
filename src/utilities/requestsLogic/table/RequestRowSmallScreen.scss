@@ -64,3 +64,10 @@
         font-size: $font-size-small;
     }
 }
+
+.need-review {
+    .request-row-small {
+        background-color: $light-orange;
+        border: 1px solid $bright-orange;
+    }
+}
