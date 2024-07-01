@@ -31,3 +31,14 @@
         font-size: 2rem;
     }
 }
+
+.request-row:first-child {
+    border-top: 1px solid $border-color;
+}
+
+.need-review {
+    .request-row {
+        background-color: $light-orange;
+        border: 1px solid $bright-orange;
+    }
+}
