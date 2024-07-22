@@ -23,10 +23,16 @@
                 padding: 0;
                 font-weight: $fontWeightRegular;
                 font-size: $font-size-small;
+                border-radius: 0px;
 
                 &:hover {
-                    border: none;
+                    font-weight: $fontWeightSemiBold;
+                    transition: font-weight 1ms;
                 }
+            }
+            .clicked {
+                font-weight: $fontWeightSemiBold;
+                border-bottom: 2px solid $font-color-black;
             }
             
         }
