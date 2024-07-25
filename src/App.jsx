@@ -59,20 +59,13 @@ function App() {
           element={<AccountSetUpCompanyName />}
         />
         <Route path="/accountsetup/users" element={<Users />} />
-        <Route path="/accountsetup/email" element={<AccountSetUpEmail />} />
         <Route
           path="/isdflow/needsanalysis"
           element={<ISDFlowNeedsAnalysis />}
         />
         <Route path="/isdflow/objective" element={<Objective />} />
-        <Route
-          path="/isdflow/final"
-          element={<FinalAssessmentStrategy />}
-        />
-        <Route
-          path="/isdflow/course"
-          element={<CourseStructure />}
-        />
+        <Route path="/isdflow/final" element={<FinalAssessmentStrategy />} />
+        <Route path="/isdflow/course" element={<CourseStructure />} />
         <Route path="*" element={<Error />} />
       </Routes>
     </Router>

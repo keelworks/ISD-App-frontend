@@ -33,6 +33,20 @@ let info = [
     stage: "courseStructure",
     status: "inProgress",
   },
+  {
+    requestName: "Reducing issues in manufacturing workflow",
+    assignedTo: "John Doe",
+    lastUpdated: "Fri Apr 13 2024 00:00:00 GMT-0700 (Pacific Daylight Time)",
+    stage: "needsAnalysis",
+    status: "canceled",
+  },
+  {
+    requestName: "Reducing issues in manufacturing workflow",
+    assignedTo: "John Doe",
+    lastUpdated: "Fri Apr 09 2024 00:00:00 GMT-0700 (Pacific Daylight Time)",
+    stage: "Storyboard",
+    status: "completed",
+  },
 ];
 
 //sort info by lastUpdated date:
@@ -54,8 +68,35 @@ const needReviewRequests = sortedInfo.filter((r) => {
   }
 });
 
-const RequestsTable = () => {
+// The states are: active, canceled, completed.
+// Request is in active state if its status is not completed or canceled.
+const filterRequestsByState = (requests, state) => {
+  return requests.filter((r) => {
+    if (state === "active") {
+      if (
+        r.status === "inProgress" ||
+        r.status === "updating" ||
+        r.status === "qaReview" ||
+        r.status === "supervisorReview" ||
+        r.status === "stakeholderReview"
+      ) {
+        return r;
+      }
+    }
+    if (r.status === state) {
+      return r;
+    }
+  });
+};
+
+const RequestsTable = ({ tab }) => {
   const [width, setWidth] = useState(window.innerWidth);
+  console.log("tab!!! " + tab);
+  const needReviewRequestsByState = filterRequestsByState(
+    needReviewRequests,
+    tab
+  );
+  const noReviewRequestsByState = filterRequestsByState(noReviewRequests, tab);
 
   useEffect(() => {
     const handleResize = () => {
@@ -72,16 +113,16 @@ const RequestsTable = () => {
   if (width < 1000) {
     return (
       <>
-        {needReviewRequests.length > 0 && (
+        {needReviewRequestsByState.length > 0 && (
           <section className="requests-table-small need-review">
-            {needReviewRequests.map((request, index) => (
+            {needReviewRequestsByState.map((request, index) => (
               <RequestRowSmallScreen key={index} request={request} />
             ))}
           </section>
         )}
-        {noReviewRequests.length > 0 && (
+        {noReviewRequestsByState.length > 0 && (
           <section className="requests-table-small">
-            {noReviewRequests.map((request, index) => (
+            {noReviewRequestsByState.map((request, index) => (
               <RequestRowSmallScreen key={index} request={request} />
             ))}
           </section>
@@ -101,9 +142,9 @@ const RequestsTable = () => {
           <th className="actions-header">Actions</th>
         </tr>
       </thead>
-      {needReviewRequests.length > 0 && (
+      {needReviewRequestsByState.length > 0 && (
         <tbody className="need-review">
-          {needReviewRequests.map((request, index) => (
+          {needReviewRequestsByState.map((request, index) => (
             <RequestRow key={index} request={request} />
           ))}
           <tr className="table-gap">
@@ -112,7 +153,7 @@ const RequestsTable = () => {
         </tbody>
       )}
       <tbody>
-        {noReviewRequests.map((request, index) => (
+        {noReviewRequestsByState.map((request, index) => (
           <RequestRow key={index} request={request} />
         ))}
       </tbody>
