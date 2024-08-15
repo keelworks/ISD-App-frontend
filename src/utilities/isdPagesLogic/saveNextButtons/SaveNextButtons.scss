@@ -1,0 +1,29 @@
+@import "../../../styles/variables";
+
+.button-container {
+    .button {
+        padding: 0.8125rem 1.875rem;
+        cursor: pointer;
+        border-radius: 0;
+        font-weight: $fontWeightSemiBold;
+        font-size: $font-size-small;
+    }
+    .save {
+        float: left;
+        background-color: $form-white-background;
+        border: 1px solid black;
+
+        &:hover {
+            background-color: darken($form-white-background, 10%);
+        }
+    }
+    .next {
+        float: right;
+        color: $font-color-white;
+        background-color: $button-blue-background;
+
+        &:hover {
+                background-color: darken($button-blue-background, 10%);
+            }
+    }
+}

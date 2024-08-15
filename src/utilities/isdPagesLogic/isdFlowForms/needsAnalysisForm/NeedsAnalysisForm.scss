@@ -1,4 +1,4 @@
-@import '../../../styles/variables';
+@import "./../../../../styles/variables";
 
 .isd-flow-form {
     padding: 2rem 1.5rem 3rem;
@@ -54,36 +54,6 @@
             border-radius: 0.5rem;
             padding: 0.625rem 0.875rem;
             resize: none;
-        }
-    }
-
-    .button-container {
-        .button {
-            float: right;
-            padding: 1rem 1.5rem;
-            cursor: pointer;
-            border-radius: 0;
-            font-weight: $fontWeightBold;
-            font-size: $font-size-small;
-        }
-        .cancel {
-            background-color: $form-white-background;
-
-            &:hover {
-                border-color: $current-menu-step-background;
-            }
-        }
-        .next {
-            color: $font-color-white;
-            background-color: $button-blue-background;
-
-            &:hover {
-					background-color: darken($button-blue-background, 10%);
-				}
-        }
-        .back{
-            color: $font-color-black;
-            background-color: $default-background;
         }
     }
 }

@@ -1,7 +1,7 @@
 import "./RequestRow.scss";
-import RequestStatus from "./RequestStatus";
-import stages from "./stages";
-import DateFormatter from "./DateFormatter.js";
+import RequestStatus from "../../requestStatus/RequestStatus";
+import stages from "../../stages";
+import DateFormatter from "./../../DateFormatter";
 
 const RequestRow = ({ request }) => {
   return (

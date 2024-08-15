@@ -1,7 +1,7 @@
-import RequestStatus from "./RequestStatus";
-import stages from "./stages";
+import RequestStatus from "../../requestStatus/RequestStatus";
+import stages from "../../stages";
 import "./RequestRowSmallScreen.scss";
-import DateFormatter from "./DateFormatter.js";
+import DateFormatter from "./../../DateFormatter";
 
 const RequestRowSmallScreen = ({ request }) => {
   return (

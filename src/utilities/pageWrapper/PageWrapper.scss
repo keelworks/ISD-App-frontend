@@ -1,0 +1,29 @@
+@import '../../styles/variables';
+
+.requests-wrapper {
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  
+
+  .isd-dashboard-wrapper {
+    width: 100%;
+    background-color: $form-white-background;
+  }
+
+  .isd-dashboard {
+    width: 80%;
+    margin: auto;
+    color: $font-color-black;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 5rem;
+    
+    h1 {
+      font-weight: $fontWeightBold;
+      font-size: $font-size-regular;
+    }
+  }
+}

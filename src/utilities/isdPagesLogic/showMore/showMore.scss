@@ -1,4 +1,4 @@
-@import '../../styles/variables';
+@import '../../../styles/variables';
 
 .show-button {
     background-color: $form-white-background;
@@ -8,11 +8,11 @@
     font-size: 1em;
     font-weight: $fontWeightBold;
     cursor: pointer;
-}
 
-.show-button:hover {
-    transition: color 0.25ms;
-    color: black;
+    &:hover {
+        transition: color 0.25ms;
+        color: black;
+    }
 }
 
 .hide {

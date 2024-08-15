@@ -16,9 +16,34 @@
         margin: auto;
         padding-top: 2rem;
 
-        .isd-flow-title {
+        .isd-flow-back-button {
+            font-size: $font-size-semi-small;
             font-weight: $fontWeightBold;
-            font-size: $font-size-large;
+            color: $font-color-black;
+            border-radius: 0;
+            transition: none;
+
+            &:hover {
+                background-color: darken($default-background, 10%);
+                border-color: transparent;
+            }
+
+        }
+
+        .isd-flow-title-container {
+            display: flex;
+            justify-content: space-between;
+            gap: 2rem;
+
+            .isd-flow-title {
+                font-weight: $fontWeightBold;
+                font-size: $font-size-large;
+            }
+
+            .isd-flow-status {
+                align-self: center;
+            }
+
         }
 
         .isd-flow-content {

@@ -47,7 +47,7 @@ function App() {
         <Route path="/login" element={<LogIn />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/requests" element={<Requests />} />
-        <Route path="/courserequest" element={<CourseRequest />} />
+        <Route path="/course_request" element={<CourseRequest />} />
         <Route path="/accountsetup/email" element={<AccountSetUpEmail />} />
         <Route path="/members" element={<TeamMembers />} />
         <Route
@@ -60,12 +60,15 @@ function App() {
         />
         <Route path="/accountsetup/users" element={<Users />} />
         <Route
-          path="/isdflow/needsanalysis"
+          path="/isdflow/needs_analysis"
           element={<ISDFlowNeedsAnalysis />}
         />
         <Route path="/isdflow/objective" element={<Objective />} />
-        <Route path="/isdflow/final" element={<FinalAssessmentStrategy />} />
-        <Route path="/isdflow/course" element={<CourseStructure />} />
+        <Route
+          path="/isdflow/final_assessment_strategy"
+          element={<FinalAssessmentStrategy />}
+        />
+        <Route path="/isdflow/course_structure" element={<CourseStructure />} />
         <Route path="*" element={<Error />} />
       </Routes>
     </Router>

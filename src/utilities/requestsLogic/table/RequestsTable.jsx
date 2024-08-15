@@ -2,7 +2,7 @@ import "./RequestsTable.scss";
 import RequestRow from "./RequestRow";
 import RequestRowSmallScreen from "./RequestRowSmallScreen";
 import { useState, useEffect } from "react";
-import { statuses } from "./statuses";
+import { statuses } from "../../statuses";
 
 let info = [
   {
