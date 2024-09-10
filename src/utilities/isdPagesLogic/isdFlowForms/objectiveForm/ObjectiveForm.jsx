@@ -1,6 +1,7 @@
+import "./ObjectiveForm.scss";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { MyInput, MyTextArea } from "./../../../utils";
+import { MyInput, MyInputWithDeleteIcon } from "./../../../utils";
 import React, { useState } from "react";
 import * as yup from "yup";
 import ShowMore from "../../showMore/showMore";
@@ -12,25 +13,44 @@ const currentStep = "objective";
 
 const errorSchema = yup.object({}).required();
 
+const getObjectiveHeader = (length) => {
+  return "# " + (length + 1) + " Enabling Objective";
+};
+
 const ObjectiveForm = ({ info }) => {
-  const { register, handleSubmit } = useForm({
+  const { register, handleSubmit, unregister } = useForm({
     resolver: yupResolver(errorSchema),
   });
 
-  const [objectives, setObjectives] = useState([
-    { objective: "objective#1", value: "" },
-  ]);
+  const retrievedObjectives = info.steps.objective.enablingObjectives.map(
+    (obj, index) => {
+      return {
+        objective: getObjectiveHeader(index),
+        value: obj,
+      };
+    }
+  );
 
+  const [objectives, setObjectives] = useState(retrievedObjectives);
   const navigate = useNavigate();
-
   const submitObjectiveForm = async (data) => {
     console.log(data);
     navigate("/isdflow/final_assessment_strategy");
   };
 
-  const addObjectives = () => {
-    let newObject = "objective" + "#" + (objectives.length + 1);
-    setObjectives([...objectives, { objective: newObject, value: "" }]);
+  const addObjective = () => {
+    setObjectives([
+      ...objectives,
+      {
+        objective: getObjectiveHeader(objectives.length),
+        value: "",
+      },
+    ]);
+  };
+
+  const deleteObjective = (item) => {
+    unregister(item.objective);
+    setObjectives(objectives.slice(0, objectives.length - 1));
   };
 
   return (
@@ -74,29 +94,42 @@ const ObjectiveForm = ({ info }) => {
           name="terminal_objective"
           type="input"
           label="Terminal Objective"
+          defaultValue={info.steps.objective.terminalObjective}
           {...register("terminal_objective")}
         />
       </fieldset>
       {objectives.map((item, index) => (
         <fieldset>
-          <MyInput
-            name={item.objective}
-            type="input"
-            value={item.value}
-            label={item.objective}
-            {...register(item.objective)}
-          />
+          {index < objectives.length - 1 && (
+            <MyInput
+              name={item.objective}
+              type="input"
+              defaultValue={item.value}
+              label={item.objective}
+              {...register(item.objective)}
+            />
+          )}
+          {index === objectives.length - 1 && (
+            <MyInputWithDeleteIcon
+              name={item.objective}
+              type="input"
+              defaultValue={item.value}
+              label={item.objective}
+              onClick={() => deleteObjective(item)}
+              {...register(item.objective)}
+            />
+          )}
         </fieldset>
       ))}
-      <label
-        onClick={addObjectives}
-        style={{
-          cursor: "pointer",
-          color: "#0774c3",
-        }}
-      >
-        + Add Enabling Objective
-      </label>
+      <fieldset>
+        <button
+          type="button"
+          onClick={addObjective}
+          className="add-objective-button"
+        >
+          + Add Enabling Objective
+        </button>
+      </fieldset>
       <SaveNextButtons />
     </form>
   );

@@ -1,0 +1,15 @@
+@import "../../../../styles/variables";
+
+.add-objective-button {
+    background-color: $form-white-background;
+    font-weight: $fontWeightBold;
+    font-size: $font-size-semi-regular;
+    color: $button-blue-background;
+    padding: 0;
+    border-radius: 0;
+
+    &:hover {
+        background-color: darken($form-white-background, 10%);
+        border-color: transparent;
+    }
+}
