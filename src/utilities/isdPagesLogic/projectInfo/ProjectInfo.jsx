@@ -1,32 +1,42 @@
 import "./ProjectInfo.scss";
+import DateFormatter from "../../DateFormatter";
 
-const InfoBlock = ({ title, content }) => {
-  return (
-    <li key={title} className="info-block">
-      <div className="title">{title}</div>
-      <div className="content">{content}</div>
-    </li>
-  );
-};
-const ProjectInfo = () => {
-  //TODO: Need to retrieve the project info from the backend
-  const INFO = [
-    { "Project ID": "ID13405GE3045" },
-    { "Delivery Date": "September 30, 2023" },
-    { Stakeholder: "Thomas Garrod" },
-    { "Subject Matter Expert": "Gagan Gundyadka" },
-    { "Instructional System Designer": "Irina Lavrova" },
-    { "Quality Assurance": "Lei Lei" },
+const ProjectInfo = ({ info }) => {
+  const neededFields = [
+    "projectId",
+    "deliveryDate",
+    "stakeholder",
+    "sme",
+    "isd",
+    "qa",
   ];
 
-  const info = INFO.map((item) => {
-    const title = Object.keys(item)[0];
-    return <InfoBlock title={title} content={item[title]} />;
+  const titles = {
+    projectId: "Project ID",
+    deliveryDate: "Delivery Date",
+    stakeholder: "Stakeholder",
+    sme: "Subject Matter Expert",
+    isd: "Instructional System Designer",
+    qa: "Quality Assurance",
+  };
+
+  const projectInfo = neededFields.map((field) => {
+    const title = titles[field];
+    let content = info[field];
+    if (field === "deliveryDate") {
+      content = DateFormatter(content);
+    }
+    return (
+      <li key={title} className="info-block">
+        <div className="title">{title}</div>
+        <div className="content">{content}</div>
+      </li>
+    );
   });
 
   return (
     <div className="isd-flow-project-info-container">
-      <ul className="isd-flow-project-info">{info}</ul>
+      <ul className="isd-flow-project-info">{projectInfo}</ul>
     </div>
   );
 };

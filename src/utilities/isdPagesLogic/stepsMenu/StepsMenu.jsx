@@ -1,20 +1,11 @@
 import "./StepsMenu.scss";
+import { stepsSequence, getStepName } from "./../../steps";
 import TickCircleSolid from "../../../assets/icons/tick-circle-solid.svg";
-
-const MENU_STEPS = [
-  "Needs Analysis",
-  "Objective",
-  "Final Assessment Strategy",
-  "Course Structure",
-  "Course Strategy Document",
-  "Storyboard",
-];
 
 const MenuBlock = ({ step, state }) => {
   const className = "menu-step " + state;
-  const key = step.split(" ").join("_");
   return (
-    <li key={key} className={className}>
+    <li className={className}>
       {step}
       {state === "completed" && (
         <img
@@ -30,12 +21,13 @@ const MenuBlock = ({ step, state }) => {
 const StepsMenu = ({ currentStep }) => {
   let state = "completed";
 
-  const menu = MENU_STEPS.map((step) => {
+  const menu = stepsSequence.map((step) => {
+    const key = getStepName(step).split(" ").join("_");
     if (step === currentStep) {
       state = "next";
-      return <MenuBlock step={step} state="current" />;
+      return <MenuBlock key={key} step={getStepName(step)} state="current" />;
     } else {
-      return <MenuBlock step={step} state={state} />;
+      return <MenuBlock key={key} step={getStepName(step)} state={state} />;
     }
   });
 
