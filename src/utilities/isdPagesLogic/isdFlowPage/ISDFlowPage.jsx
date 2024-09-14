@@ -39,8 +39,14 @@ const info = {
     },
     objective: {
       terminalObjective: "terminal objective",
-      enablingObjectives: ["my first Enabling objective", "second"],
+      enablingObjectives: ["my first Enabling objective", "second", "third"],
     },
+    finalAssessmentStrategy: [
+      {
+        measurementStrategy: "some measurement startegy",
+        successCriteria: "some success criteria",
+      },
+    ],
   },
 };
 
@@ -88,10 +94,10 @@ const ISDFlowPage = ({ currentStep }) => {
   const page = (
     <div className="isd-flow-wrapper">
       <div className="isd-flow-container">
-        <div class="isd-flow-back-button-container">
+        <div className="isd-flow-back-button-container">
           <button
             type="button"
-            class="isd-flow-back-button"
+            className="isd-flow-back-button"
             onClick={handleBackButtonClick}
           >
             <img
@@ -103,7 +109,7 @@ const ISDFlowPage = ({ currentStep }) => {
           </button>
         </div>
 
-        <div class="isd-flow-title-container">
+        <div className="isd-flow-title-container">
           <h3 className="isd-flow-title">{info.courseName}</h3>
           <div className="isd-flow-status">
             <RequestStatus status={info.status} />

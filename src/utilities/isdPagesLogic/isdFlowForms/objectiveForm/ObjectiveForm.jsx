@@ -1,7 +1,11 @@
 import "./ObjectiveForm.scss";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { MyInput, MyInputWithDeleteIcon } from "./../../../utils";
+import {
+  MyInput,
+  MyInputWithDeleteIcon,
+  getObjectiveHeader,
+} from "./../../../utils";
 import React, { useState } from "react";
 import * as yup from "yup";
 import ShowMore from "../../showMore/showMore";
@@ -12,10 +16,6 @@ import { getStepName } from "./../../../steps";
 const currentStep = "objective";
 
 const errorSchema = yup.object({}).required();
-
-const getObjectiveHeader = (length) => {
-  return "# " + (length + 1) + " Enabling Objective";
-};
 
 const ObjectiveForm = ({ info }) => {
   const { register, handleSubmit, unregister } = useForm({

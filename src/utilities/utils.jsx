@@ -1,12 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
-import TrashCan from "../assets/icons/trash-can.svg";
 
 export const MyInput = React.forwardRef(
-  ({ name, id, type, label, ...rest }, ref) => {
+  ({ name, id, type, label, classNameForLabel, ...rest }, ref) => {
     return (
       <div className="form-input">
-        <label htmlFor={id ?? name}>{label}</label>
+        <label htmlFor={id ?? name} className={classNameForLabel}>
+          {label}
+        </label>
         <input type={type} id={id ?? name} name={name} {...rest} ref={ref} />
       </div>
     );
@@ -91,4 +92,8 @@ MyTextArea.propTypes = {
   name: PropTypes.string.isRequired,
   rows: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
+};
+
+export const getObjectiveHeader = (length) => {
+  return "# " + (length + 1) + " Enabling Objective";
 };
