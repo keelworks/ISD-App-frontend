@@ -37,6 +37,10 @@ const info = {
       projectRisks: "",
       recommendation: "",
     },
+    objective: {
+      terminalObjective: "terminal objective",
+      enablingObjectives: ["my first Enabling objective", "second"],
+    },
   },
 };
 
