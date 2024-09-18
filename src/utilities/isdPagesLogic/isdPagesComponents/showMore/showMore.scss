@@ -1,0 +1,20 @@
+@import '../../../../styles/variables';
+
+.show-button {
+    background-color: $form-white-background;
+    color: $font-color-darker-grey;
+    border: none;
+    padding: 0;
+    font-size: 1em;
+    font-weight: $fontWeightBold;
+    cursor: pointer;
+
+    &:hover {
+        transition: color 0.25ms;
+        color: black;
+    }
+}
+
+.hide {
+    display: none;
+}

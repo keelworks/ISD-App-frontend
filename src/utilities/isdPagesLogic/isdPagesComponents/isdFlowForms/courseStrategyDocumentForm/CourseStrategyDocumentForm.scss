@@ -1,0 +1,33 @@
+@import "../../../../../styles/variables";
+
+.csd-section {
+    display: flex;
+    gap: 2.25rem;
+    flex-direction: column;
+
+    .module-item {
+        font-weight: $fontWeightSemiBold;
+        font-size: $font-size-small;
+        color: $font-color-black;
+
+        position: relative;
+        button {
+            position: absolute;
+            right: -1px;
+            top: -1px;
+            min-height: 4.125rem;
+            width: 4.125rem;
+            border-left: 1px solid $form-devider-border-color;
+            background-color: transparent;
+            border-radius: 0;
+            background-image: url("../../../../../assets/icons/plus.svg");
+            background-repeat: no-repeat;
+            background-position: center;
+
+            &:hover {
+                border: 1px solid $form-border-color;
+                background-color: darken($form-white-background, 10%);
+            }
+        }
+    }
+}

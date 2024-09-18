@@ -1,0 +1,14 @@
+@import "../../../../../styles/variables";
+
+.add-lesson {
+    background-color: $light-grey-background;
+}
+
+.add-module {
+    float: left;
+}
+
+.remove-module {
+    float: right;
+    color: red;
+}

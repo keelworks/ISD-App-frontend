@@ -1,0 +1,16 @@
+@import "../../../../../styles/variables";
+
+.element-item {
+    background-color: $background-grey;
+    padding: 1.5rem;
+    color: $font-color-grey-3;
+
+    .element-title {
+        margin-bottom: 1.2rem;
+    }
+
+    .grey-color {
+        color: $font-color-grey-3;
+    }
+
+}
