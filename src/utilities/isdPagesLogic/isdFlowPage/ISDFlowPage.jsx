@@ -5,7 +5,7 @@ import PageWrapper from "../../../utilities/pageWrapper/PageWrapper";
 import NeedsAnalysisForm from "../isdFlowForms/needsAnalysisForm/NeedsAnalysisForm";
 import ObjectiveForm from "../isdFlowForms/objectiveForm/ObjectiveForm";
 import FinalAssessmentStrategyForm from "../isdFlowForms/finalAssessmentStrategyForm/FinalAssessmentStrategyForm";
-import CourseStructureForm from "../isdFlowForms/courseStructureForm/courseStructureForm";
+import CourseStructureForm from "../isdFlowForms/courseStructureForm/CourseStructureForm";
 import LessThanIcon from "../../../assets/icons/less-than.svg";
 import { useNavigate } from "react-router-dom";
 import RequestStatus from "../../requestStatus/RequestStatus";
@@ -45,6 +45,18 @@ const info = {
       {
         measurementStrategy: "some measurement startegy",
         successCriteria: "some success criteria",
+      },
+    ],
+    courseStructure: [
+      {
+        moduleNumber: "1",
+        title: "My first module ever",
+        lessons: [],
+      },
+      {
+        moduleNumber: "2",
+        title: "My second module",
+        lessons: ["lesson1", "lesson2"],
       },
     ],
   },
