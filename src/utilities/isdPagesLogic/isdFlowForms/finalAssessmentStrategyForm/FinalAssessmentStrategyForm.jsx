@@ -86,7 +86,7 @@ const FinalAssessmentStrategyForm = ({ info }) => {
         </div>
       </fieldset>
       {objectives.map((objective, index) => (
-        <section className="enabling_objective">
+        <section className="module" key={`objective#${index}`}>
           <fieldset className="add-extra-margin">
             <MyInput
               name={(index + 1).toString()}
@@ -94,7 +94,7 @@ const FinalAssessmentStrategyForm = ({ info }) => {
               defaultValue={objective.value}
               label={getObjectiveHeader(index)}
               classNameForLabel="title"
-              {...register((index + 1).toString())}
+              {...register(`enabling_objectives.${index}`)}
             />
           </fieldset>
           <fieldset className="add-extra-margin">
@@ -103,7 +103,7 @@ const FinalAssessmentStrategyForm = ({ info }) => {
               type="input"
               defaultValue={objective.measurementStrategy}
               label="Measurement strategy"
-              {...register(`measurement_strategy_${index + 1}`)}
+              {...register(`fas.${index}.measurement_strategy`)}
             />
           </fieldset>
           <fieldset>
@@ -112,7 +112,7 @@ const FinalAssessmentStrategyForm = ({ info }) => {
               type="input"
               defaultValue={objective.successCriteria}
               label="Success criteria"
-              {...register(`success_criteria_${index + 1}`)}
+              {...register(`fas.${index}.success_criteria`)}
             />
           </fieldset>
         </section>
