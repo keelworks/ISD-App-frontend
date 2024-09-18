@@ -1,0 +1,64 @@
+@import "../../../../../styles/variables";
+
+.pop-up {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: $popup-background;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    .pop-up-main {
+        overflow-y: scroll;
+        background-color: $font-color-white;
+        padding: 4.875rem 6rem;
+        min-width: 40rem;
+        width: 40%;
+        
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+
+        .subheading {
+            font-size: 1rem;
+            font-weight: $fontWeightRegular;
+            color: $font-color-black;
+        }
+
+        .title {
+            font-size: 1.5rem;
+            font-weight: $fontWeightSemiBold;
+            color: $font-color-black;
+        }
+
+        .button-container {
+            margin-top: 3rem;
+            .discard, .add {
+                float: right;
+            }
+
+            .discard {
+                background-color: $form-white-background;
+                border: 1px solid black;
+                padding: 0.8125rem 1.875rem;
+                &:hover {
+                    background-color: darken($form-white-background, 10%);
+                }
+            }
+            .add {
+                background-color: $button-blue-background;
+                color: $font-color-white;
+                margin-left: 2rem;
+                padding: 0.8125rem 3.1875rem;
+                &:hover {
+                    background-color: darken($button-blue-background, 10%);
+                }
+            }
+        }
+    }
+}

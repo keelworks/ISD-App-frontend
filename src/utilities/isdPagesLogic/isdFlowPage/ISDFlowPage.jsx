@@ -1,7 +1,5 @@
-import "./ISDFlowPage.scss";
-import StepsMenu from "../stepsMenu/StepsMenu";
-import ProjectInfo from "../projectInfo/ProjectInfo";
 import PageWrapper from "../../../utilities/pageWrapper/PageWrapper";
+<<<<<<< HEAD
 import NeedsAnalysisForm from "../isdFlowForms/needsAnalysisForm/NeedsAnalysisForm";
 import ObjectiveForm from "../isdFlowForms/objectiveForm/ObjectiveForm";
 import FinalAssessmentStrategyForm from "../isdFlowForms/finalAssessmentStrategyForm/FinalAssessmentStrategyForm";
@@ -9,6 +7,10 @@ import CourseStructureForm from "../isdFlowForms/courseStructureForm/CourseStruc
 import LessThanIcon from "../../../assets/icons/less-than.svg";
 import { useNavigate } from "react-router-dom";
 import RequestStatus from "../../requestStatus/RequestStatus";
+=======
+import ISDFlowPageContainer from "../isdPagesComponents/isdFlowPageContainer/IsdFlowPageContainer";
+import { ISDFlowRequestProvider } from "../isdFlowContext/IsdFlowContext";
+>>>>>>> afe111c (Refactored / Add Course Structure Form Functionality:)
 
 // TODO: need to retrieve info from backend
 const info = {
@@ -41,10 +43,59 @@ const info = {
       terminalObjective: "terminal objective",
       enablingObjectives: ["my first Enabling objective", "second", "third"],
     },
-    finalAssessmentStrategy: [
-      {
-        measurementStrategy: "some measurement startegy",
+    finalAssessmentStrategy: {
+      "my first Enabling objective": {
+        measurementStrategy: "some measurement strategy",
         successCriteria: "some success criteria",
+      },
+    },
+    courseStructure: [
+      {
+        title: "My first module ever",
+        lessons: [],
+      },
+      {
+        title: "My second module",
+        lessons: ["lesson111", "lesson2"],
+      },
+    ],
+    courseStrategyDocument: [
+      {
+        type: "title",
+        moduleTitle: "My first module ever",
+        description: "my description",
+        elements: [],
+        lessons: [],
+        // elements: [
+        //   { type: "image", guidance: "do something" },
+        //   { type: "activity", guidance: "do something else" },
+        // ],
+      },
+      {
+        type: "title",
+        moduleTitle: "My second module",
+        description: "my description",
+        elements: [],
+        lessons: [
+          {
+            type: "lesson",
+            lessonName: "lesson1",
+            header: "some lesson header",
+            desiredOutcome: "some lesson outcome",
+            elements: [],
+            // elements: [
+            //   { type: "image", guidance: "do something" },
+            //   { type: "activity", guidance: "do something else" },
+            // ],
+          },
+          {
+            type: "lesson",
+            lessonName: "lesson2",
+            header: "second lesson header",
+            desiredOutcome: "second lesson outcome",
+            elements: [],
+          },
+        ],
       },
     ],
     courseStructure: [
@@ -62,84 +113,14 @@ const info = {
   },
 };
 
-const getCurrentStepForm = (currentStep, info) => {
-  switch (currentStep) {
-    case "needsAnalysis":
-      return <NeedsAnalysisForm info={info} />;
-    case "objective":
-      return <ObjectiveForm info={info} />;
-    case "finalAssessmentStrategy":
-      return <FinalAssessmentStrategyForm info={info} />;
-    case "courseStructure":
-      return <CourseStructureForm info={info} />;
-    default:
-      console.log(
-        "Unknown step. Cannot display the correct form for ISDFlowPage"
-      );
-  }
-};
-
 const ISDFlowPage = ({ currentStep }) => {
-  const navigate = useNavigate();
-
-  const handleBackButtonClick = () => {
-    switch (currentStep) {
-      case "needsAnalysis":
-        navigate("/requests");
-        break;
-      case "objective":
-        navigate("/isdflow/needs_analysis");
-        break;
-      case "finalAssessmentStrategy":
-        navigate("/isdflow/objective");
-        break;
-      case "courseStructure":
-        navigate("/isdflow/final_assessment_strategy");
-        break;
-      default:
-        console.log(
-          "Unknown step. Cannot display the correct page when clicking Back button"
-        );
-    }
-  };
-
-  const page = (
-    <div className="isd-flow-wrapper">
-      <div className="isd-flow-container">
-        <div className="isd-flow-back-button-container">
-          <button
-            type="button"
-            className="isd-flow-back-button"
-            onClick={handleBackButtonClick}
-          >
-            <img
-              src={LessThanIcon}
-              alt="Back Button Sign"
-              className="back-button-icon"
-            />
-            &nbsp;Back
-          </button>
-        </div>
-
-        <div className="isd-flow-title-container">
-          <h3 className="isd-flow-title">{info.courseName}</h3>
-          <div className="isd-flow-status">
-            <RequestStatus status={info.status} />
-          </div>
-        </div>
-
-        <div className="isd-flow-content">
-          <StepsMenu currentStep={currentStep} />
-          <div className="isd-flow-form-container">
-            {getCurrentStepForm(currentStep, info)}
-          </div>
-          <ProjectInfo info={info} />
-        </div>
-      </div>
-    </div>
+  return (
+    <PageWrapper>
+      <ISDFlowRequestProvider>
+        <ISDFlowPageContainer currentStep={currentStep}></ISDFlowPageContainer>
+      </ISDFlowRequestProvider>
+    </PageWrapper>
   );
-
-  return <PageWrapper page={page} />;
 };
 
 export default ISDFlowPage;

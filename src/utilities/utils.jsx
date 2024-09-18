@@ -76,10 +76,12 @@ MySelect.propTypes = {
 };
 
 export const MyTextArea = React.forwardRef(
-  ({ name, id, label, rows, ...rest }, ref) => {
+  ({ name, id, label, rows, labelClass, ...rest }, ref) => {
     return (
       <div className="form-input">
-        <label htmlFor={id ?? name}>{label}</label>
+        <label htmlFor={id ?? name} className={labelClass}>
+          {label}
+        </label>
         <textarea id={id ?? name} name={name} rows={rows} {...rest} ref={ref} />
       </div>
     );

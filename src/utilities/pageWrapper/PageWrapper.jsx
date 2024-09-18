@@ -1,7 +1,7 @@
 import "./PageWrapper.scss";
 import CircleUser from "./../../assets/icons/circle-user.svg";
 
-const PageWrapper = ({ page }) => {
+const PageWrapper = ({ children }) => {
   return (
     <main className="requests-wrapper">
       <div className="isd-dashboard-wrapper">
@@ -10,7 +10,7 @@ const PageWrapper = ({ page }) => {
           <img src={CircleUser} alt="User" className="circle-user-icon" />
         </div>
       </div>
-      {page}
+      {children}
     </main>
   );
 };

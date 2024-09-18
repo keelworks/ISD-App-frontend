@@ -12,14 +12,15 @@ import {
   Error,
   TeamMembers,
   ISDFlowNeedsAnalysis,
-  Objective,
+  ISDFlowObjective,
+  ISDFlowFinalAssessmentStrategy,
+  ISDFlowCourseStructure,
+  ISDFlowCourseStrategyDocument,
 } from "./pages";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useGetAuthStatusQuery } from "./redux/RTKQueries/authQuery";
 import { logIn, logOut } from "./redux/slices/authSlice";
-import FinalAssessmentStrategy from "./pages/ISDFlow/FinalAssessmentStrategy/FinalAssessmentStrategy";
-import CourseStructure from "./pages/ISDFlow/CourseStructure/CourseStructure.jsx";
 
 function App() {
   const dispatch = useDispatch();
@@ -63,12 +64,19 @@ function App() {
           path="/isdflow/needs_analysis"
           element={<ISDFlowNeedsAnalysis />}
         />
-        <Route path="/isdflow/objective" element={<Objective />} />
+        <Route path="/isdflow/objective" element={<ISDFlowObjective />} />
         <Route
           path="/isdflow/final_assessment_strategy"
-          element={<FinalAssessmentStrategy />}
+          element={<ISDFlowFinalAssessmentStrategy />}
         />
-        <Route path="/isdflow/course_structure" element={<CourseStructure />} />
+        <Route
+          path="/isdflow/course_structure"
+          element={<ISDFlowCourseStructure />}
+        />
+        <Route
+          path="/isdflow/course_strategy_document"
+          element={<ISDFlowCourseStrategyDocument />}
+        />
         <Route path="*" element={<Error />} />
       </Routes>
     </Router>

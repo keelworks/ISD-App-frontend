@@ -9,7 +9,8 @@ export { default as AccountSetUpCompanyName } from './AccountSetUp/CompanyName/C
 export { default as Users } from './AccountSetUp/Users/Users';
 export { default as Error } from './Error/Error';
 export { default as TeamMembers } from './TeamMembers/TeamMembers';
-export { default as ISDFlowNeedsAnalysis} from './ISDFlow/NeedsAnalysis/NeedsAnalysis';
-export { default as FinalAssessmentStrategy} from './ISDFlow/FinalAssessmentStrategy/FinalAssessmentStrategy';
-export { default as CourseStructure} from './ISDFlow/CourseStructure/CourseStructure';
-export {default as Objective} from './ISDFlow/Objective/Objective'
+export { default as ISDFlowNeedsAnalysis } from './ISDFlow/NeedsAnalysis/NeedsAnalysis';
+export { default as ISDFlowFinalAssessmentStrategy } from './ISDFlow/FinalAssessmentStrategy/FinalAssessmentStrategy';
+export { default as ISDFlowCourseStructure } from './ISDFlow/CourseStructure/CourseStructure';
+export { default as ISDFlowObjective } from './ISDFlow/Objective/Objective';
+export { default as ISDFlowCourseStrategyDocument } from './ISDFlow/CourseStrategyDocument/CourseStrategyDocument';

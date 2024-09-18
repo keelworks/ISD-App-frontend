@@ -1,0 +1,57 @@
+@import "../../../../../styles/variables";
+
+.menu-wrapper {
+    display: inline-block;
+    min-width: 16rem;
+    menu {
+        padding: 0;
+        margin: 0;
+        border: none;
+
+    }
+
+    .select-element-drop-down {
+        display: flex;
+        flex-direction: column;
+    
+        border: 1px solid $form-border-color-grey;
+        border-radius: 0.5rem;
+        box-shadow: 0px 4px 6px -2px #10182808,
+        0px 12px 16px -4px #10182814;
+
+        .add-element-button {
+            font-size: $font-size-semi-small;
+            font-weight: $fontWeightMedium;
+            border-radius: 0;
+            background-color: $form-white-background;
+            padding: 0.625rem 1rem;
+            vertical-align: middle;
+
+            &:hover {
+                background-color: darken($form-white-background, 10%);
+                border-color: transparent;
+            }
+        }
+
+        .add-elements-button {
+            font-size: $font-size-small;
+            padding: 0.75rem 1rem;
+            border-radius: 0.5rem 0.5rem 0 0;
+            border-bottom: 1px solid $form-border-color-grey;
+        }
+
+        .add-element-button, .add-elements-button {
+            text-align: left;
+        }
+
+        .teaching-text-button {
+           line-height: 20px;
+            
+        }
+
+        .activity-button {
+            border-radius: 0 0 0.5rem 0.5rem;
+            border-top: 3px solid $form-border-color-grey;
+        }
+    }
+}

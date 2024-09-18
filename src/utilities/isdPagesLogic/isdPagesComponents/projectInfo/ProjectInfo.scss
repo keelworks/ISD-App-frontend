@@ -1,0 +1,27 @@
+@import '../../../../styles/variables';
+
+.isd-flow-project-info-container {
+    flex: 0 1 20%;
+
+    .isd-flow-project-info {
+        display: flex;
+        flex-direction: column;
+        background-color: $form-white-background;
+        gap: 2rem;
+        padding: 1.25rem;
+
+        .info-block {
+            list-style-type: none;
+            .title {
+                color: $font-color-darker-grey;
+                font-weight: $fontWeightRegular;
+                font-size: $font-size-semi-small;
+            }
+            .content {
+                color: $font-color-black;
+                font-weight: $fontWeightSemiBold;
+                font-size: $font-size-small;
+            }
+        }
+    }
+}
