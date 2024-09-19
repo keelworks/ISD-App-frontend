@@ -1,11 +1,13 @@
+import "./CourseStructureForm.scss";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import React, { useState } from "react";
-import { MyInput } from "./../../../utils";
+import { MyInput, MyInputWithDeleteIcon } from "../../../utils";
 import { Input } from "antd";
 import { getStepName } from "../../../steps";
 import SaveNextButtons from "../../saveNextButtons/SaveNextButtons";
+import ShowMore from "../../showMore/showMore";
 
 const currentStep = "courseStructure";
 
@@ -16,38 +18,53 @@ const submitCourseStructureForm = async (data) => {
 };
 
 const CourseStructureForm = ({ info }) => {
-  const { register, handleSubmit } = useForm({
+  const { register, unregister, handleSubmit } = useForm({
     resolver: yupResolver(errorSchema),
   });
-  const [modules, setModules] = useState([]);
-  const addModules = () => {
-    let newModule = "module" + "#" + (modules.length + 1);
-    setModules([...modules, { module: newModule, value: "", lessonList: [] }]);
+
+  const [modules, setModules] = useState(info.steps.courseStructure);
+
+  const addModule = () => {
+    setModules([
+      ...modules,
+      { moduleNumber: modules.length + 1, title: "", lessons: [] },
+    ]);
   };
+
   const addLesson = (index) => {
-    const lesson = { name: " ", detail: " " };
     const updatedModules = [...modules];
-    updatedModules[index].lessonList = [
-      ...updatedModules[index].lessonList,
-      lesson,
-    ];
+    updatedModules[index].lessons = [...updatedModules[index].lessons, ""];
     setModules(updatedModules);
   };
-  const removeLesson = (index) => {
+
+  const removeLastLesson = (index) => {
+    const currentModule = modules[index];
+    unregister(
+      `${currentModule.moduleNumber}.lessons.${
+        currentModule.lessons.length - 1
+      }`
+    );
     const updatedModules = [...modules];
-    updatedModules[index].lessonList = [
-      ...updatedModules[index].lessonList.slice(
+    updatedModules[index].lessons = [
+      ...updatedModules[index].lessons.slice(
         0,
-        updatedModules[index].lessonList.length - 1
+        updatedModules[index].lessons.length - 1
       ),
     ];
     setModules(updatedModules);
   };
-  const removeModules = () => {
-    if (modules.length > 1) {
+
+  const removeLastModule = () => {
+    if (modules.length > 0) {
+      const lastModule = modules[modules.length - 1];
+      unregister(`${lastModule.moduleNumber}.title`);
+      lastModule.lessons.forEach((lesson, i) => {
+        unregister(`${lastModule.moduleNumber}.lessons.${i}`);
+      });
       setModules([...modules.slice(0, modules.length - 1)]);
     }
   };
+
   return (
     <form
       className="isd-flow-form"
@@ -57,70 +74,108 @@ const CourseStructureForm = ({ info }) => {
       <fieldset>
         <div className="field-title">Purpose</div>
         <div className="field-text">
-          This document supports academic needs analysis (reduced) as well as
-          organizational (expanded). You must understand the problem this course
-          addresses. Organizational learning analysis are more involved{" "}
-          <span>show more</span>.
+          At this milestone, you’ll determine module focus and list lessons to
+          be addressed under each. You will also see a table for listing types
+          of concepts and for identifying opportunity to link between concepts.
+          <ShowMore
+            text={[
+              "Contrary to a common misconception, modules do not automatically map to objectives. Sometimes one module will serve two objectives. Sometimes one objective will be addressed at every module, for example, a safety objective for a course on how to operate a lawn mower is addressed at modules for fueling, starting, clearing clippings, and maintenance.",
+            ]}
+          />
         </div>
       </fieldset>
       <fieldset>
         <div className="field-title">Quality Criteria</div>
         <div className="field-text">
-          1. The problem is clearly stated and fully understood by the design
-          team.
+          1. The structure supports enabling objectives.
           <br />
-          2. We have credible data confirming the extent of the problem (applies
-          primarily to organizational) <span>show more</span>.
+          2. Detail is preceded by larger concepts.
+          <br />
+          3. Concept chunking supports optimal cognitive load.
+          <ShowMore
+            text={[
+              "4. No more than seven concepts to module.",
+              "5.  No more than five modules in a course.",
+              "6. Focus is retained.",
+              "7. Course title supports the terminal objective.",
+              "8. Modules support to course title.",
+              "9. Concepts support to module title (or focus).",
+              "10. Structure serves an order consistent with efficient learning (e.g., introduct shoe before addressing laces).",
+              "11. The document does not address content or learning strategy.",
+              "12. Like concepts are identified and Like Concepts table.",
+              "13. Concept linking opportunity is identified by module/lesson in the Linking Table.",
+            ]}
+          />
         </div>
       </fieldset>
-      {modules.map((item, index) => (
-        <div>
-          <h3 className="form-title">{"Module " + (index + 1)}</h3>
-          <fieldset>
+      {modules.map((module, index) => (
+        <section className="module" key={`module#${index}`}>
+          <h3 className="form-title add-extra-margin">
+            {"Module " + module.moduleNumber}
+          </h3>
+          <fieldset className="add-extra-margin">
             <MyInput
-              name={item.module}
+              name={`${module.moduleNumber}.title`}
               type="input"
-              value={item.value}
-              label={"Module Heading"}
-              {...register(item.module)}
+              defaultValue={module.title}
+              label={"Title"}
+              {...register(`${module.moduleNumber}.title`)}
             />
           </fieldset>
+          {module.lessons.map((lesson, i) => (
+            <fieldset className="add-extra-margin" key={`lesson#${i}`}>
+              {i < module.lessons.length - 1 && (
+                <MyInput
+                  name={`${module.moduleNumber}.lessons.${i}`}
+                  type="input"
+                  defaultValue={lesson}
+                  label={"Lesson " + (i + 1)}
+                  {...register(`${module.moduleNumber}.lessons.${i}`)}
+                />
+              )}
+              {i === module.lessons.length - 1 && (
+                <MyInputWithDeleteIcon
+                  name={`${module.moduleNumber}.lessons.${i}`}
+                  type="input"
+                  defaultValue={lesson}
+                  label={"Lesson " + (i + 1)}
+                  onClick={() => removeLastLesson(index)}
+                  {...register(`${module.moduleNumber}.lessons.${i}`)}
+                />
+              )}
+            </fieldset>
+          ))}
+
           <fieldset>
-            {item.lessonList.map((items, i) => (
-              <div>
-                <MyInput value={"Lesson" + (i + 1)} disabled={true} />
-              </div>
-            ))}
+            <button
+              type="button"
+              onClick={() => addLesson(index)}
+              className="add-button add-lesson"
+            >
+              + Add Lesson
+            </button>
           </fieldset>
-          <label
-            onClick={() => addLesson(index)}
-            style={{
-              cursor: "pointer",
-              color: "#0774c3",
-            }}
-          >
-            + Create Lesson
-          </label>
-        </div>
+        </section>
       ))}
-      <label
-        onClick={addModules}
-        style={{
-          cursor: "pointer",
-          color: "#0774c3",
-        }}
-      >
-        + Add Modules
-      </label>
-      <label
-        onClick={removeModules}
-        style={{
-          cursor: modules.length > 1 ? "pointer" : "not-allowed",
-          color: modules.length > 1 ? "red" : "gray",
-        }}
-      >
-        - Remove Modules
-      </label>
+      <fieldset>
+        <button
+          type="button"
+          onClick={addModule}
+          className="add-button add-module"
+        >
+          + Add Module
+        </button>
+        {modules.length > 0 && (
+          <button
+            type="button"
+            onClick={removeLastModule}
+            className="add-button remove-module"
+          >
+            - Remove Last Module
+          </button>
+        )}
+      </fieldset>
+
       <SaveNextButtons />
     </form>
   );

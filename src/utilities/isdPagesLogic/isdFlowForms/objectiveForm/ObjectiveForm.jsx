@@ -99,14 +99,14 @@ const ObjectiveForm = ({ info }) => {
         />
       </fieldset>
       {objectives.map((item, index) => (
-        <fieldset>
+        <fieldset key={index}>
           {index < objectives.length - 1 && (
             <MyInput
               name={item.objective}
               type="input"
               defaultValue={item.value}
               label={item.objective}
-              {...register(item.objective)}
+              {...register(`enabling_objectives.${index}`)}
             />
           )}
           {index === objectives.length - 1 && (
@@ -116,17 +116,13 @@ const ObjectiveForm = ({ info }) => {
               defaultValue={item.value}
               label={item.objective}
               onClick={() => deleteObjective(item)}
-              {...register(item.objective)}
+              {...register(`enabling_objectives.${index}`)}
             />
           )}
         </fieldset>
       ))}
       <fieldset>
-        <button
-          type="button"
-          onClick={addObjective}
-          className="add-objective-button"
-        >
+        <button type="button" onClick={addObjective} className="add-button">
           + Add Enabling Objective
         </button>
       </fieldset>
