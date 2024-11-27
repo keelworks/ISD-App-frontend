@@ -63,7 +63,7 @@ const NavBar = ({ onTabClicked }) => {
           <input type="text" placeholder="Search" />
         </li>
         <li className="create-request">
-          <Link to="/courserequest">
+          <Link to="/course_request">
             <button className="create-request-button">Create Request</button>
           </Link>
         </li>
