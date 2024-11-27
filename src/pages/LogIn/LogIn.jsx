@@ -33,7 +33,7 @@ const LogIn = () => {
     try {
       await submitForm("signin", data);
 
-      navigate("/request");
+      navigate("/requests");
     } catch (error) {
       setSubmitError(true);
 

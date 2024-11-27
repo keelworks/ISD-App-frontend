@@ -27,6 +27,8 @@ const ObjectiveForm = () => {
   });
 
   const request = useISDFlowRequest();
+  console.log("request!!!!!");
+  console.log(request);
   const dispatch = useISDFlowDispatch();
   const navigate = useNavigate();
 
@@ -94,42 +96,25 @@ const ObjectiveForm = () => {
           {...register("terminalObjective")}
         />
       </fieldset>
-<<<<<<< HEAD:src/utilities/isdPagesLogic/isdFlowForms/objectiveForm/ObjectiveForm.jsx
-      {objectives.map((item, index) => (
-=======
       {objectives.map((objective, index) => (
->>>>>>> afe111c (Refactored / Add Course Structure Form Functionality:):src/utilities/isdPagesLogic/isdPagesComponents/isdFlowForms/objectiveForm/ObjectiveForm.jsx
         <fieldset key={index}>
           {index < objectives.length - 1 && (
             <MyInput
               name={getObjectiveHeader(index)}
               type="input"
-<<<<<<< HEAD:src/utilities/isdPagesLogic/isdFlowForms/objectiveForm/ObjectiveForm.jsx
-              defaultValue={item.value}
-              label={item.objective}
-              {...register(`enabling_objectives.${index}`)}
-=======
               defaultValue={objective}
               label={getObjectiveHeader(index)}
               {...register(`enablingObjectives.${index}`)}
->>>>>>> afe111c (Refactored / Add Course Structure Form Functionality:):src/utilities/isdPagesLogic/isdPagesComponents/isdFlowForms/objectiveForm/ObjectiveForm.jsx
             />
           )}
           {index === objectives.length - 1 && (
             <MyInputWithDeleteIcon
               name={getObjectiveHeader(index)}
               type="input"
-<<<<<<< HEAD:src/utilities/isdPagesLogic/isdFlowForms/objectiveForm/ObjectiveForm.jsx
-              defaultValue={item.value}
-              label={item.objective}
-              onClick={() => deleteObjective(item)}
-              {...register(`enabling_objectives.${index}`)}
-=======
               defaultValue={objective}
               label={getObjectiveHeader(index)}
               onClick={() => deleteLastObjective()}
               {...register(`enablingObjectives.${index}`)}
->>>>>>> afe111c (Refactored / Add Course Structure Form Functionality:):src/utilities/isdPagesLogic/isdPagesComponents/isdFlowForms/objectiveForm/ObjectiveForm.jsx
             />
           )}
         </fieldset>

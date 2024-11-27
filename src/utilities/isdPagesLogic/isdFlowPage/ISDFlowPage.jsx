@@ -1,16 +1,6 @@
 import PageWrapper from "../../../utilities/pageWrapper/PageWrapper";
-<<<<<<< HEAD
-import NeedsAnalysisForm from "../isdFlowForms/needsAnalysisForm/NeedsAnalysisForm";
-import ObjectiveForm from "../isdFlowForms/objectiveForm/ObjectiveForm";
-import FinalAssessmentStrategyForm from "../isdFlowForms/finalAssessmentStrategyForm/FinalAssessmentStrategyForm";
-import CourseStructureForm from "../isdFlowForms/courseStructureForm/CourseStructureForm";
-import LessThanIcon from "../../../assets/icons/less-than.svg";
-import { useNavigate } from "react-router-dom";
-import RequestStatus from "../../requestStatus/RequestStatus";
-=======
 import ISDFlowPageContainer from "../isdPagesComponents/isdFlowPageContainer/IsdFlowPageContainer";
 import { ISDFlowRequestProvider } from "../isdFlowContext/IsdFlowContext";
->>>>>>> afe111c (Refactored / Add Course Structure Form Functionality:)
 
 // TODO: need to retrieve info from backend
 const info = {

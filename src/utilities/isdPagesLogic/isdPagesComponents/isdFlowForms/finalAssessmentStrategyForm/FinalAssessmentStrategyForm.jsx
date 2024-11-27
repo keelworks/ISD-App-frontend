@@ -91,7 +91,7 @@ const FinalAssessmentStrategyForm = () => {
         </div>
       </fieldset>
       {objectives.map((objective, index) => (
-        <section className="module" key={`objective#${index}`}>
+        <section className="enabling_objective">
           <fieldset className="add-extra-margin">
             <MyInput
               name={(index + 1).toString()}
@@ -99,11 +99,7 @@ const FinalAssessmentStrategyForm = () => {
               defaultValue={objective.value}
               label={getObjectiveHeader(index)}
               classNameForLabel="title"
-<<<<<<< HEAD:src/utilities/isdPagesLogic/isdFlowForms/finalAssessmentStrategyForm/FinalAssessmentStrategyForm.jsx
-              {...register(`enabling_objectives.${index}`)}
-=======
-              {...register(`${index}.value`)}
->>>>>>> afe111c (Refactored / Add Course Structure Form Functionality:):src/utilities/isdPagesLogic/isdPagesComponents/isdFlowForms/finalAssessmentStrategyForm/FinalAssessmentStrategyForm.jsx
+              {...register((index + 1).toString())}
             />
           </fieldset>
           <fieldset className="add-extra-margin">
@@ -112,11 +108,7 @@ const FinalAssessmentStrategyForm = () => {
               type="input"
               defaultValue={objective.measurementStrategy}
               label="Measurement strategy"
-<<<<<<< HEAD:src/utilities/isdPagesLogic/isdFlowForms/finalAssessmentStrategyForm/FinalAssessmentStrategyForm.jsx
-              {...register(`fas.${index}.measurement_strategy`)}
-=======
-              {...register(`${index}.measurementStrategy`)}
->>>>>>> afe111c (Refactored / Add Course Structure Form Functionality:):src/utilities/isdPagesLogic/isdPagesComponents/isdFlowForms/finalAssessmentStrategyForm/FinalAssessmentStrategyForm.jsx
+              {...register(`measurement_strategy_${index + 1}`)}
             />
           </fieldset>
           <fieldset>
@@ -125,11 +117,7 @@ const FinalAssessmentStrategyForm = () => {
               type="input"
               defaultValue={objective.successCriteria}
               label="Success criteria"
-<<<<<<< HEAD:src/utilities/isdPagesLogic/isdFlowForms/finalAssessmentStrategyForm/FinalAssessmentStrategyForm.jsx
-              {...register(`fas.${index}.success_criteria`)}
-=======
-              {...register(`${index}.successCriteria`)}
->>>>>>> afe111c (Refactored / Add Course Structure Form Functionality:):src/utilities/isdPagesLogic/isdPagesComponents/isdFlowForms/finalAssessmentStrategyForm/FinalAssessmentStrategyForm.jsx
+              {...register(`success_criteria_${index + 1}`)}
             />
           </fieldset>
         </section>
