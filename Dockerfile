@@ -1,4 +1,6 @@
-# Stage 1: Build the React application
+# Multi-stage Dockerfile for React + Vite App
+
+# Stage 1: Build
 FROM node:18 AS build
 
 # Set the working directory
@@ -10,21 +12,26 @@ COPY package*.json ./
 # Install dependencies
 RUN npm install
 
-# Copy the rest of the application code
+# Copy the rest of the application source code
 COPY . .
 
-# Build the React application
+# Build the app
 RUN npm run build
 
-# Stage 2: Serve the React application with nginx
-FROM nginx:alpine
+# Stage 2: Production
+FROM nginx:stable-alpine
 
-# Copy the built application from the previous stage
-COPY --from=build /app/dist /usr/share/nginx/html
+# Set the working directory
+WORKDIR /usr/share/nginx/html
 
-# Expose port 80
+# Remove default nginx static assets
+RUN rm -rf ./*
+
+# Copy built assets from Stage 1
+COPY --from=build /app/dist .
+
+# Expose the application port
 EXPOSE 80
 
-# Command to run nginx
+# Start NGINX
 CMD ["nginx", "-g", "daemon off;"]
-
