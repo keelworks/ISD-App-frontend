@@ -1,183 +1,156 @@
 import React from "react";
-import { useForm, Controller } from "react-hook-form";
-import { useState } from "react";
+import { useForm } from "react-hook-form";
 import "./CourseRequest.scss";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { requestCreated } from "../../redux/slices/requestsSlice";
+import PageWrapper from "../../utilities/pageWrapper/PageWrapper";
+import { MyInput } from "../../utilities/utils";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
 
+const errorSchema = yup
+  .object({
+    requestName: yup.string().required("Enter request name."),
+    stakeholder: yup.string().email().required("Enter stakeholder email."),
+    sme: yup.string().email().required("Enter sme email."),
+    problemStatement: yup.string().required("Enter problem statement."),
+    problemData: yup.string().required("Enter problem data."),
+    valueOfChange: yup.string().required("Enter value of change."),
+    peopleRequiredToAttend: yup
+      .string()
+      .required("Enter people required to attend."),
+    priorityUrgency: yup.string().required("Enter priority / urgency."),
+  })
+  .required();
 const CourseRequest = () => {
-  const { handleSubmit, control, register, formState, watch } = useForm();
-  const { errors } = formState;
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(errorSchema),
+  });
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const onSubmit = (data) => {
     console.log(data);
-    //submit handling logic
+    dispatch(requestCreated(data));
+    navigate("/requests");
   };
 
   return (
-    <main className="body-container">
-      <div className="course-request-form-container">
-        <h2 className="title">New Course Request Form</h2>
-        <p className="description">
-          This document supports academic needs analysis(reduced) as well as
-          organizational (expanded). You must understand the problem this course
-          addresses. Organizational learning analysis are more involved.
-        </p>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="forms-container">
-            <div className="">
-              <div>
-                <label htmlFor="stakeholder">Stakeholder</label>
-              </div>
-              <input
-                type="email"
-                id="email"
+    <PageWrapper>
+      <main className="new-request-container">
+        <div className="new-request-form-container">
+          <form className="new-request-form" onSubmit={handleSubmit(onSubmit)}>
+            <header>
+              <h3 className="title">New Course Request Form</h3>
+              <p className="description">
+                This document supports academic needs analysis(reduced) as well
+                as organizational (expanded). You must understand the problem
+                this course addresses. Organizational learning analysis are more
+                involved.
+              </p>
+            </header>
+
+            <fieldset>
+              <MyInput
+                name="request_name"
+                type="input"
+                label="Request Name"
+                {...register("requestName")}
+              />
+              <p className="error">{errors.requestName?.message}</p>
+            </fieldset>
+
+            <fieldset>
+              <MyInput
+                name="stakeholder"
+                type="input"
+                label="Stakeholder"
                 placeholder="Email address"
-                {...register("email", {
-                  required: {
-                    value: true,
-                    message: "Email address is required",
-                  },
-                })}
+                {...register("stakeholder")}
               />
-              {<p className="error">{errors?.email?.message}</p>}
-            </div>
+              <p className="error">{errors.stakeholder?.message}</p>
+            </fieldset>
 
-            <div className="">
-              <div>
-                <label htmlFor="email-SME">SME</label>
-              </div>
-              <input
-                type="email"
-                id="email-SME"
+            <fieldset>
+              <MyInput
+                name="sme"
+                type="input"
+                label="SME"
                 placeholder="Email address"
-                {...register("email-SME", {
-                  required: {
-                    value: true,
-                    message: "Email address is required",
-                  },
-                })}
+                {...register("sme")}
               />
-              {<p className="error">{errors?.["email-SME"]?.message}</p>}
-            </div>
+              <p className="error">{errors.sme?.message}</p>
+            </fieldset>
 
-            <div className="">
-              <div>
-                <label htmlFor="problem-statement">Problem Statement</label>
-              </div>
-              <input
-                type="text"
-                id="text-problem-statement"
-                placeholder="Problem Statement"
-                {...register("text-problem-statement", {
-                  required: {
-                    value: true,
-                    message: "Problem statement is required",
-                  },
-                })}
+            <fieldset>
+              <MyInput
+                name="problem_statement"
+                type="input"
+                label="Problem Statement"
+                {...register("problemStatement")}
               />
-              {
-                <p className="error">
-                  {errors?.["text-problem-statement"]?.message}
-                </p>
-              }
-            </div>
+              <p className="error">{errors.problemStatement?.message}</p>
+            </fieldset>
 
-            <div className="">
-              <div>
-                <label htmlFor="problem-data">Problem Data</label>
-              </div>
-              <input
-                type="text"
-                id="text-problem-data"
-                placeholder="Problem data"
-                {...register("text-problem-data", {
-                  required: {
-                    value: true,
-                    message: "Problem data is required",
-                  },
-                })}
+            <fieldset>
+              <MyInput
+                name="problem_data"
+                type="input"
+                label="Problem Data"
+                {...register("problemData")}
               />
-              {
-                <p className="error">
-                  {errors?.["text-problem-data"]?.message}
-                </p>
-              }
-            </div>
+              <p className="error">{errors.problemData?.message}</p>
+            </fieldset>
 
-            <div className="">
-              <div>
-                <label htmlFor="value-of-change">Value of Change?</label>
-              </div>
-              <input
-                type="text"
-                id="text-value-of-change"
-                {...register("text-value-of-change", {
-                  required: {
-                    value: true,
-                    message: "Value of change is required",
-                  },
-                })}
+            <fieldset>
+              <MyInput
+                name="value_of_change"
+                type="input"
+                label="Value Of Change ?"
+                {...register("valueOfChange")}
               />
-              {
-                <p className="error">
-                  {errors?.["text-value-of-change"]?.message}
-                </p>
-              }
-            </div>
+              <p className="error">{errors.valueOfChange?.message}</p>
+            </fieldset>
 
-            <div className="">
-              <div>
-                <label htmlFor="expected-growth">Expected Growth</label>
-              </div>
-              <input
-                type="text"
-                id="text-expected-growth"
-                {...register("text-expected-growth", {
-                  required: {
-                    value: true,
-                    message: "Expected growth is required",
-                  },
-                })}
+            <fieldset>
+              <MyInput
+                name="people_required_to_attend"
+                type="input"
+                label="People required to attend"
+                {...register("peopleRequiredToAttend")}
               />
-              {
-                <p className="error">
-                  {errors?.["text-expected-growth"]?.message}
-                </p>
-              }
-            </div>
+              <p className="error">{errors.peopleRequiredToAttend?.message}</p>
+            </fieldset>
 
-            <div className="">
-              <div>
-                <label htmlFor="priority-urgency">Priority / Urgency</label>
-              </div>
-              <input
-                type="text"
-                id="text-priority-urgency"
-                {...register("text-priority-urgency", {
-                  required: {
-                    value: true,
-                    message: "Priority / Urgency is required",
-                  },
-                })}
+            <fieldset>
+              <MyInput
+                name="priority_urgency"
+                type="input"
+                label="Priority / Urgency"
+                {...register("priorityUrgency")}
               />
-              {
-                <p className="error">
-                  {errors?.["text-priority-urgency"]?.message}
-                </p>
-              }
-            </div>
-            <div className="btn-container">
-              <Link to="/request">
-                <button type="submit">Cancel</button>
-              </Link>
-              <button type="submit" className="btn btn-primary">
-                Submit
+              <p className="error">{errors.priorityUrgency?.message}</p>
+            </fieldset>
+
+            <div className="button-container new-request-button-container">
+              <button className="button create-request" type="submit">
+                Create request
               </button>
+              <Link to="/requests">
+                <button className="button cancel" type="button">
+                  Cancel
+                </button>
+              </Link>
             </div>
-          </div>
-        </form>
-      </div>
-    </main>
+          </form>
+        </div>
+      </main>
+    </PageWrapper>
   );
 };
 

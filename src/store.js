@@ -1,6 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import authReducer from './redux/slices/authSlice';
 import companyReducer from './redux/slices/companyCreateSlice';
+import requestsReducer from './redux/slices/requestsSlice';
 import { authApi } from './redux/RTKQueries/authQuery';
 import { createCompanyApi } from './redux/RTKQueries/createCompanyQuery';
 
@@ -11,6 +12,7 @@ const store = configureStore({
 	reducer: {
 		authReducer,
 		companyReducer,
+		requests: requestsReducer,
 		[authApi.reducerPath]: authApi.reducer,
 		[createCompanyApi.reducerPath]: createCompanyApi.reducer,
 		[membersCompanyApi.reducerPath]: membersCompanyApi.reducer,
