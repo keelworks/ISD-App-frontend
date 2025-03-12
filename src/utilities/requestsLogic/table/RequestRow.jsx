@@ -8,7 +8,7 @@ const RequestRow = ({ request }) => {
     <tr className="request-row">
       <td className="request-name">{request.requestName}</td>
       <td className="assigned-to">{request.assignedTo}</td>
-      <td className="last-updated">{DateFormatter(request.lastUpdated)}</td>
+      <td className="last-updated">{DateFormatter(request.updatedAt)}</td>
       <td className="stage">{stages[request.stage]}</td>
       <td className="status">
         <RequestStatus status={request.status} />

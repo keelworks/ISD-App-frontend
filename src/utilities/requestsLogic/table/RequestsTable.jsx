@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import { statuses } from "../../statuses";
 import { useSelector } from "react-redux";
 import { selectAllRequests } from "../../../redux/slices/requestsSlice";
+import { useGetRequestsQuery } from "../../../redux/RTKQueries/requestsQuery";
 
 // let info = [
 //   {
@@ -51,6 +52,24 @@ import { selectAllRequests } from "../../../redux/slices/requestsSlice";
 //   },
 // ];
 
+const sortRequests = (requests) =>
+  requests.toSorted((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt));
+
+const splitToNeedReviewAndNoNeedReviewRequests = (requests) => {
+  const noReviewRequests = [];
+  const needReviewRequests = requests.filter((r) => {
+    if (
+      r.status == "qaReview" ||
+      r.status == "supervisorReview" ||
+      r.status == "stakeholderReview"
+    ) {
+      return r;
+    } else {
+      noReviewRequests.push(r);
+    }
+  });
+  return [noReviewRequests, needReviewRequests];
+};
 // The states are: active, canceled, completed.
 // Request is in active state if its status is not completed or canceled.
 const filterRequestsByState = (requests, state) => {
@@ -72,34 +91,53 @@ const filterRequestsByState = (requests, state) => {
   });
 };
 
+const generateTableHeader = (content) => {
+  return (
+    <table className="requests-table">
+      <thead className="requests-table-header">
+        <tr>
+          <th className="request-name-header">Request name</th>
+          <th className="assigned-to-header">Assigned To</th>
+          <th className="last-updated-header">Last Updated</th>
+          <th className="stage-header">Stage</th>
+          <th className="status-header">Status</th>
+          <th className="actions-header">Actions</th>
+        </tr>
+      </thead>
+      {content}
+    </table>
+  );
+};
+
+const generateInfoMessageRow = (message) => {
+  return (
+    <tbody>
+      <tr className="request-row">
+        <td colSpan="6" className="info-message">
+          {message}
+        </td>
+      </tr>
+    </tbody>
+  );
+};
+
+const generateSmallScreenInfoMessage = (message) => {
+  return (
+    <section className="requests-table-small">
+      <div className="info-message-small-screen">{message}</div>
+    </section>
+  );
+};
+
+const displayInfoMessage = (width, message) => {
+  if (width < 1000) {
+    return generateSmallScreenInfoMessage(message);
+  }
+  return generateTableHeader(generateInfoMessageRow(message));
+};
+
 const RequestsTable = ({ tab }) => {
   const [width, setWidth] = useState(window.innerWidth);
-  const requests = [...useSelector(selectAllRequests)];
-
-  //sort info by lastUpdated date:
-  const sortedRequests = requests.sort(
-    (a, b) => new Date(b.lastUpdated) - new Date(a.lastUpdated)
-  );
-
-  //find requests that need review:
-  const noReviewRequests = [];
-  const needReviewRequests = sortedRequests.filter((r) => {
-    if (
-      r.status == "qaReview" ||
-      r.status == "supervisorReview" ||
-      r.status == "stakeholderReview"
-    ) {
-      return r;
-    } else {
-      noReviewRequests.push(r);
-    }
-  });
-
-  const needReviewRequestsByState = filterRequestsByState(
-    needReviewRequests,
-    tab
-  );
-  const noReviewRequestsByState = filterRequestsByState(noReviewRequests, tab);
 
   useEffect(() => {
     const handleResize = () => {
@@ -113,55 +151,94 @@ const RequestsTable = ({ tab }) => {
     };
   }, []);
 
-  if (width < 1000) {
-    return (
-      <>
-        {needReviewRequestsByState.length > 0 && (
-          <section className="requests-table-small need-review">
-            {needReviewRequestsByState.map((request, index) => (
-              <RequestRowSmallScreen key={index} request={request} />
-            ))}
-          </section>
-        )}
-        {noReviewRequestsByState.length > 0 && (
-          <section className="requests-table-small">
-            {noReviewRequestsByState.map((request, index) => (
-              <RequestRowSmallScreen key={index} request={request} />
-            ))}
-          </section>
-        )}
-      </>
+  const {
+    data: requests,
+    isLoading,
+    isSuccess,
+    isError,
+    error,
+  } = useGetRequestsQuery();
+
+  if (isLoading) {
+    // console.log("loading");
+    return displayInfoMessage(width, "Loading...");
+  } else if (isSuccess) {
+    // console.log(requests);
+
+    // return if there are no requests
+    if (requests.length === 0) {
+      return displayInfoMessage(width, "New requests will appear here");
+    }
+    //sort info by lastUpdated date:
+    const sortedRequests = sortRequests(requests);
+
+    //find requests that need review:
+    const [noReviewRequests, needReviewRequests] =
+      splitToNeedReviewAndNoNeedReviewRequests(sortedRequests);
+
+    const needReviewRequestsByState = filterRequestsByState(
+      needReviewRequests,
+      tab
     );
+    const noReviewRequestsByState = filterRequestsByState(
+      noReviewRequests,
+      tab
+    );
+
+    if (width < 1000) {
+      return (
+        <>
+          {needReviewRequestsByState.length > 0 && (
+            <section className="requests-table-small need-review">
+              {needReviewRequestsByState.map((request, index) => (
+                <RequestRowSmallScreen key={index} request={request} />
+              ))}
+            </section>
+          )}
+          {noReviewRequestsByState.length > 0 && (
+            <section className="requests-table-small">
+              {noReviewRequestsByState.map((request, index) => (
+                <RequestRowSmallScreen key={index} request={request} />
+              ))}
+            </section>
+          )}
+        </>
+      );
+    } else {
+      return (
+        <table className="requests-table">
+          <thead className="requests-table-header">
+            <tr>
+              <th className="request-name-header">Request name</th>
+              <th className="assigned-to-header">Assigned To</th>
+              <th className="last-updated-header">Last Updated</th>
+              <th className="stage-header">Stage</th>
+              <th className="status-header">Status</th>
+              <th className="actions-header">Actions</th>
+            </tr>
+          </thead>
+          {needReviewRequestsByState.length > 0 && (
+            <tbody className="need-review">
+              {needReviewRequestsByState.map((request, index) => (
+                <RequestRow key={index} request={request} />
+              ))}
+              <tr className="table-gap">
+                <td colSpan={6}></td>
+              </tr>
+            </tbody>
+          )}
+          <tbody>
+            {noReviewRequestsByState.map((request, index) => (
+              <RequestRow key={index} request={request} />
+            ))}
+          </tbody>
+        </table>
+      );
+    }
+  } else if (isError) {
+    console.log(error);
+    return displayInfoMessage(width, "Sorry, something went wrong :(");
   }
-  return (
-    <table className="requests-table">
-      <thead className="requests-table-header">
-        <tr>
-          <th className="request-name-header">Request name</th>
-          <th className="assigned-to-header">Assigned To</th>
-          <th className="last-updated-header">Last Updated</th>
-          <th className="stage-header">Stage</th>
-          <th className="status-header">Status</th>
-          <th className="actions-header">Actions</th>
-        </tr>
-      </thead>
-      {needReviewRequestsByState.length > 0 && (
-        <tbody className="need-review">
-          {needReviewRequestsByState.map((request, index) => (
-            <RequestRow key={index} request={request} />
-          ))}
-          <tr className="table-gap">
-            <td colSpan={6}></td>
-          </tr>
-        </tbody>
-      )}
-      <tbody>
-        {noReviewRequestsByState.map((request, index) => (
-          <RequestRow key={index} request={request} />
-        ))}
-      </tbody>
-    </table>
-  );
 };
 
 export default RequestsTable;

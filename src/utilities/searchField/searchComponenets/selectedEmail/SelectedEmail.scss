@@ -1,0 +1,24 @@
+@import '../../../../styles/variables';
+
+.email-chip {
+
+    border: 1px solid $current-menu-step-background;
+
+    border-radius: 1rem;
+    padding: 0.2rem 0.4rem;
+
+    .remove-email-icon {
+        display: inline-block;
+        font-size: 1rem;
+        padding-left: 1rem;
+        cursor: pointer;
+        transition: transform 0.5s;
+
+        
+    }
+    .remove-email-icon:hover {
+        transform: scale(1.1);
+
+        // background-color: darken($form-white-background, 10%);
+    }
+}

@@ -1,0 +1,10 @@
+@import "../../../styles/variables";
+
+.search-people-field-container {
+    label {
+        display: block;
+        font-weight: $fontWeightMedium;
+        font-size: 0.875rem;
+        color: $font-color-black;
+      }
+}

@@ -44,4 +44,15 @@
             background-color: $default-background;
         }
     }
+
+    .info-message {
+        text-align: center;
+    }
+}
+
+.info-message-small-screen {
+    background-color: $form-white-background;
+    padding: 2.25rem 2.5rem;
+    text-align: center;
+    margin-top: 2.5rem;
 }
