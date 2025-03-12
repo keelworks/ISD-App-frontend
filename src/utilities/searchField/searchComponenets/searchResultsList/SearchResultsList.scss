@@ -1,0 +1,30 @@
+@import '../../../../styles/variables';
+
+.search-results-list {
+    color: $font-color-grey-3;
+    font-weight: $fontWeightMedium;
+    font-size: $font-size-semi-small;
+    line-height: 1.25rem;
+    ul {
+        list-style: none;
+        padding: 0;
+
+        border: 1px solid $form-border-color-grey;
+        border-radius: 0.5rem;
+        box-shadow: 0px 4px 6px -2px #10182808,
+        0px 12px 16px -4px #10182814;
+
+        li {
+            padding: 0.625rem 1rem;
+            &:hover {
+                background-color: darken($form-white-background, 10%);
+            }
+        }
+
+        &:empty {
+            display: none;
+        }
+    }
+
+    
+}

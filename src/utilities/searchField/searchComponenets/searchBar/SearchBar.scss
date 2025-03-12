@@ -1,0 +1,8 @@
+.selected-emails-container + .form-input > .search-input {
+    margin: 0 !important;
+    position: relative;
+    z-index: 1;
+    border-top: none !important;
+    border-top-left-radius: 0 !important;
+    border-top-right-radius: 0 !important;
+}

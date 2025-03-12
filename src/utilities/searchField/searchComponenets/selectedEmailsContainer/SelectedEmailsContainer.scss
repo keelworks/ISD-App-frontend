@@ -1,0 +1,18 @@
+@import '../../../../styles/variables';
+
+.selected-emails-container {
+    color: $font-color-grey-3;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+
+    border: 1px solid var(--Black-20, rgba(17, 17, 19, 0.2));
+    border-bottom: none;
+    padding: 0.8125rem 0.8125rem 0.5rem 0.8125rem;
+    font-size: $font-size-semi-small;
+    font-weight: $fontWeightMedium;
+    border-radius: 0.25rem 0.25rem 0 0;
+    box-sizing: border-box;
+
+    margin-top: 0.5rem;
+}

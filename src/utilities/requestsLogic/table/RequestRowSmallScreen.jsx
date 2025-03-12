@@ -15,7 +15,7 @@ const RequestRowSmallScreen = ({ request }) => {
       <div className="stage-header">Stage</div>
       <div className="stage">{stages[request.stage]}</div>
       <div className="last-updated-header">Last updated</div>
-      <div className="last-updated">{DateFormatter(request.lastUpdated)}</div>
+      <div className="last-updated">{DateFormatter(request.updatedAt)}</div>
     </div>
   );
 };

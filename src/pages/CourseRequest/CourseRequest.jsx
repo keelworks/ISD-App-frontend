@@ -8,36 +8,46 @@ import PageWrapper from "../../utilities/pageWrapper/PageWrapper";
 import { MyInput } from "../../utilities/utils";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import useCreateRequestApi from "../../utilities/formPostLogic/createRequestApi";
+import SearchPeopleField from "../../utilities/searchField/searchPeopleField/SearchPeopleField";
 
 const errorSchema = yup
   .object({
     requestName: yup.string().required("Enter request name."),
-    stakeholder: yup.string().email().required("Enter stakeholder email."),
+    stakeholderEmail: yup.string().email().required("Enter stakeholder email."),
     sme: yup.string().email().required("Enter sme email."),
     problemStatement: yup.string().required("Enter problem statement."),
     problemData: yup.string().required("Enter problem data."),
     valueOfChange: yup.string().required("Enter value of change."),
-    peopleRequiredToAttend: yup
-      .string()
-      .required("Enter people required to attend."),
-    priorityUrgency: yup.string().required("Enter priority / urgency."),
+    peopleRequiredToAttend: yup.array().min(1, "Select at least one email"),
+    priority: yup.string().required("Enter priority / urgency."),
   })
   .required();
 const CourseRequest = () => {
   const {
     handleSubmit,
     register,
-    formState: { errors },
+    setValue,
+    setError,
+    clearErrors,
+    formState: { errors, submitCount },
   } = useForm({
     resolver: yupResolver(errorSchema),
   });
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { submitForm, form } = useCreateRequestApi();
 
-  const onSubmit = (data) => {
-    console.log(data);
-    dispatch(requestCreated(data));
-    navigate("/requests");
+  const onSubmit = async (data) => {
+    try {
+      console.log(data);
+      dispatch(requestCreated(data));
+      const res = await submitForm(data);
+      console.log(res);
+      navigate("/requests");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -71,9 +81,9 @@ const CourseRequest = () => {
                 type="input"
                 label="Stakeholder"
                 placeholder="Email address"
-                {...register("stakeholder")}
+                {...register("stakeholderEmail")}
               />
-              <p className="error">{errors.stakeholder?.message}</p>
+              <p className="error">{errors.stakeholderEmail?.message}</p>
             </fieldset>
 
             <fieldset>
@@ -118,11 +128,13 @@ const CourseRequest = () => {
             </fieldset>
 
             <fieldset>
-              <MyInput
-                name="people_required_to_attend"
-                type="input"
+              <SearchPeopleField
                 label="People required to attend"
-                {...register("peopleRequiredToAttend")}
+                register={register}
+                setValue={setValue}
+                setError={setError}
+                clearErrors={clearErrors}
+                submitCount={submitCount}
               />
               <p className="error">{errors.peopleRequiredToAttend?.message}</p>
             </fieldset>
@@ -132,9 +144,9 @@ const CourseRequest = () => {
                 name="priority_urgency"
                 type="input"
                 label="Priority / Urgency"
-                {...register("priorityUrgency")}
+                {...register("priority")}
               />
-              <p className="error">{errors.priorityUrgency?.message}</p>
+              <p className="error">{errors.priority?.message}</p>
             </fieldset>
 
             <div className="button-container new-request-button-container">
