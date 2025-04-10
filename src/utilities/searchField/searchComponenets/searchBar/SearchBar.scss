@@ -1,3 +1,10 @@
+.search-input {
+    background-image: url("../../../../assets/icons/search.svg");
+    padding-left: 3.8rem !important;      
+    background-repeat: no-repeat;
+    background-position: top 0.4rem left 0.6rem;
+}
+
 .selected-emails-container + .form-input > .search-input {
     margin: 0 !important;
     position: relative;
@@ -6,3 +13,13 @@
     border-top-left-radius: 0 !important;
     border-top-right-radius: 0 !important;
 }
+
+.form-input:has(+ .search-results-list) {
+    .search-input {
+        border-bottom-left-radius: 0 !important;
+        border-bottom-right-radius: 0 !important;
+    }
+    
+}
+
+

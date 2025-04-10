@@ -1,6 +1,12 @@
 import "./SearchBar.scss";
 
-const SearchBar = ({ setSearchResults, input, setInput, selectedEmails }) => {
+const SearchBar = ({
+  name,
+  setSearchResults,
+  input,
+  setInput,
+  selectedEmails,
+}) => {
   const fetchUsers = (value) => {
     fetch("https://jsonplaceholder.typicode.com/users")
       .then((response) => response.json())
@@ -35,15 +41,13 @@ const SearchBar = ({ setSearchResults, input, setInput, selectedEmails }) => {
   return (
     <div className="form-input">
       <input
+        id={name}
+        name={name}
         className="search-input"
         placeholder="Type to search people..."
         value={input}
         onChange={(e) => handleChange(e.target.value)}
       ></input>
-      {/* <icon></icon> */}
-      {/* <label htmlFor={id ?? name}>{label}</label> */}
-      {/* <input type={type} id={id ?? name} name={name} {...rest} ref={ref} /> */}
-      {/* <button type="button" onClick={onClick}></button> */}
     </div>
   );
 };
