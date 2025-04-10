@@ -129,6 +129,7 @@ const CourseRequest = () => {
 
             <fieldset>
               <SearchPeopleField
+                name="people_required_to_attend"
                 label="People required to attend"
                 register={register}
                 setValue={setValue}

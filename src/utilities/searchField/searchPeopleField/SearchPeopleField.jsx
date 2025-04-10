@@ -6,6 +6,7 @@ import SelectedEmailsContainer from "../searchComponenets/selectedEmailsContaine
 import { useEffect } from "react";
 
 const SearchPeopleField = ({
+  name,
   label,
   register,
   setValue,
@@ -33,7 +34,7 @@ const SearchPeopleField = ({
 
   return (
     <div className="search-people-field-container">
-      <label htmlFor="">{label}</label>
+      <label htmlFor={name}>{label}</label>
       {console.log(selectedEmails.length)}
       {selectedEmails.length > 0 && (
         <SelectedEmailsContainer
@@ -42,18 +43,21 @@ const SearchPeopleField = ({
         />
       )}
       <SearchBar
+        name={name}
         setSearchResults={setSearchResults}
         input={input}
         setInput={setInput}
         selectedEmails={selectedEmails}
       />
-      <SearchResultsList
-        searchResults={searchResults}
-        setSearchResults={setSearchResults}
-        selectedEmails={selectedEmails}
-        setSelectedEmails={setSelectedEmails}
-        setInput={setInput}
-      />
+      {searchResults.length > 0 && (
+        <SearchResultsList
+          searchResults={searchResults}
+          setSearchResults={setSearchResults}
+          selectedEmails={selectedEmails}
+          setSelectedEmails={setSelectedEmails}
+          setInput={setInput}
+        />
+      )}
     </div>
   );
 };
