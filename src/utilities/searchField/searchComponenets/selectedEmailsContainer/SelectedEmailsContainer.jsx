@@ -7,6 +7,7 @@ const SelectedEmailsContainer = ({ selectedEmails, setSelectedEmails }) => {
     <div className="selected-emails-container">
       {selectedEmails.map((email) => (
         <SelectedEmail
+          key={email}
           email={email}
           selectedEmails={selectedEmails}
           setSelectedEmails={setSelectedEmails}

@@ -1,6 +1,8 @@
 @import "../../../styles/variables";
 
 .search-people-field-container {
+    font-weight: $fontWeightRegular;
+    font-size: $font-size-small;
     label {
         display: block;
         font-weight: $fontWeightMedium;

@@ -27,8 +27,6 @@ const ObjectiveForm = () => {
   });
 
   const request = useISDFlowRequest();
-  console.log("request!!!!!");
-  console.log(request);
   const dispatch = useISDFlowDispatch();
   const navigate = useNavigate();
 

@@ -40,10 +40,9 @@ const CourseRequest = () => {
 
   const onSubmit = async (data) => {
     try {
-      console.log(data);
       dispatch(requestCreated(data));
       const res = await submitForm(data);
-      console.log(res);
+
       navigate("/requests");
     } catch (error) {
       console.log(error);
@@ -129,6 +128,7 @@ const CourseRequest = () => {
 
             <fieldset>
               <SearchPeopleField
+                name="people_required_to_attend"
                 label="People required to attend"
                 register={register}
                 setValue={setValue}

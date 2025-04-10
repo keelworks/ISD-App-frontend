@@ -16,7 +16,9 @@ const SearchResultsList = ({
     <div className="search-results-list">
       <ul>
         {searchResults.map((person) => (
-          <li onClick={() => handleEmailClick(person.email)}>{person.email}</li>
+          <li key={person.email} onClick={() => handleEmailClick(person.email)}>
+            {person.email}
+          </li>
         ))}
       </ul>
     </div>
