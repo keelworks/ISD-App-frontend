@@ -160,11 +160,8 @@ const RequestsTable = ({ tab }) => {
   } = useGetRequestsQuery();
 
   if (isLoading) {
-    // console.log("loading");
     return displayInfoMessage(width, "Loading...");
   } else if (isSuccess) {
-    // console.log(requests);
-
     // return if there are no requests
     if (requests.length === 0) {
       return displayInfoMessage(width, "New requests will appear here");
