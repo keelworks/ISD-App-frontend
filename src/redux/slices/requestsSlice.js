@@ -16,8 +16,6 @@ const newRequest = {
 
 const initialState = [];
 
-//Boolean state for auth, set by backend response to verifying JWT.
-
 const requestsSlice = createSlice({
 	name: 'requestsSlice',
 	initialState,
@@ -32,16 +30,8 @@ const requestsSlice = createSlice({
 				}
 			}
 		},
-		// logOut: state => {
-		// 	state.auth = null;
-		// },
-		// logIn: state => {
-		// 	state.auth = true;
-		// },
 	},
 });
-
-// export const { logOut, logIn } = authSlice.actions;
 
 export const {
 	requestCreated,

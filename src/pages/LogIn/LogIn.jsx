@@ -10,6 +10,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { MyInput } from "../../utilities/utils";
 import useUserAuthApi from "../../utilities/formPostLogic/userAuthApi";
 import React from "react";
+import { userLoggedIn } from "../../redux/slices/authSlice";
 
 const errorSchema = yup
   .object({
@@ -25,13 +26,15 @@ const LogIn = () => {
     formState: { errors, isSubmitting },
     reset,
   } = useForm({ resolver: yupResolver(errorSchema) });
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const { submitForm } = useUserAuthApi();
   const [submitError, setSubmitError] = useState(false);
 
   const submitLogIn = async (data) => {
     try {
-      await submitForm("signin", data);
+      const result = await submitForm("signin", data);
+      dispatch(userLoggedIn(result));
 
       navigate("/requests");
     } catch (error) {

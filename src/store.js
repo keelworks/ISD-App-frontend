@@ -11,7 +11,7 @@ import { requestsApi } from './redux/RTKQueries/requestsQuery';
 
 const store = configureStore({
 	reducer: {
-		authReducer,
+		auth: authReducer,
 		companyReducer,
 		requests: requestsReducer,
 		[authApi.reducerPath]: authApi.reducer,

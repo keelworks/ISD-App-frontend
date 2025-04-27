@@ -1,24 +1,27 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-	auth: false,
+	token: localStorage.getItem('access_token') || null ,
 };
 
-//Boolean state for auth, set by backend response to verifying JWT.
-
 const authSlice = createSlice({
-	name: 'authSlice',
+	name: 'auth',
 	initialState,
 	reducers: {
-		logOut: state => {
-			state.auth = null;
+		userLoggedIn: (state, action) => {
+			const token = action.payload.token;
+			localStorage.setItem('access_token', token);
+			state.token  = token;
 		},
-		logIn: state => {
-			state.auth = true;
-		},
+		userLoggedOut: (state) => {
+			state.token = null;
+			localStorage.removeItem('access_token');
+		}
 	},
 });
 
-export const { logOut, logIn } = authSlice.actions;
+export const { userLoggedIn, userLoggedOut } = authSlice.actions;
+
+export const selectCurrentToken = state => state.auth.token;
 
 export default authSlice.reducer;

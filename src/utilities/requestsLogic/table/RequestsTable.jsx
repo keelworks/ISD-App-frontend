@@ -233,8 +233,13 @@ const RequestsTable = ({ tab }) => {
       );
     }
   } else if (isError) {
-    console.log(error);
+    //need to select one of two options:
+    console.log(JSON.stringify(error));
     return displayInfoMessage(width, "Sorry, something went wrong :(");
+    // return displayInfoMessage(
+    //   width,
+    //   `Sorry, something went wrong: ${error.error}`
+    // );
   }
 };
 

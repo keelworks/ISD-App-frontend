@@ -99,3 +99,10 @@ MyTextArea.propTypes = {
 export const getObjectiveHeader = (length) => {
   return "# " + (length + 1) + " Enabling Objective";
 };
+
+export const addAuthTokenToHeader = (headers) => {
+  const token = localStorage.getItem("access_token");
+  if (token) {
+    return headers.set("authorization", token);
+  }
+};
