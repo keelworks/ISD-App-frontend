@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { addAuthTokenToHeader } from '../../utilities/utils';
 
 // All api calls related to auth process params will need to be adjusted accordingly to backend specifications
 export const authApi = createApi({
@@ -6,18 +7,13 @@ export const authApi = createApi({
 	baseQuery: fetchBaseQuery({
 		baseUrl: 'http://localhost:3000',
 		prepareHeaders(headers) {
+			addAuthTokenToHeader(headers);
 			headers.set('Accept', 'application/json');
 			headers.set('Content-Type', 'application/json');
 			return headers;
 		},
 	}),
 	endpoints: builder => ({
-		getAuthStatus: builder.query({
-			query: () => ({
-				url: '/auth',
-				method: 'GET',
-			}),
-		}),
 		signup: builder.mutation({
 			query: userInfo => ({
 				url: '/api/auth/register',
@@ -32,19 +28,18 @@ export const authApi = createApi({
 				body: userInfo,
 			}),
 		}),
-		getSignout: builder.query({
-			query: () => ({
-				url: '/signout',
-				method: 'GET',
-			}),
-		}),
+		// signout: builder.query({
+		// 	query: () => ({
+		// 		url: '/signout',
+		// 		method: 'GET',
+		// 	}),
+		// }),
 	}),
 });
 
 // Standard naming convention rtk
 export const {
-	useGetAuthStatusQuery,
 	useSignupMutation,
 	useSigninMutation,
-	useGetSignoutQuery,
+	// useSignoutQuery,
 } = authApi;
