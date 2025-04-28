@@ -39,16 +39,6 @@ const info = {
         successCriteria: "some success criteria",
       },
     },
-    courseStructure: [
-      {
-        title: "My first module ever",
-        lessons: [],
-      },
-      {
-        title: "My second module",
-        lessons: ["lesson111", "lesson2"],
-      },
-    ],
     courseStrategyDocument: [
       {
         type: "title",
