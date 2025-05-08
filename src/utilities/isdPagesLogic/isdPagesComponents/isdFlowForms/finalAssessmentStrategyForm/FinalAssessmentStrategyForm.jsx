@@ -4,7 +4,7 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import React from "react";
 import { MyInput, getObjectiveHeader } from "./../../../../utils";
-import { getStepName } from "./../../../../steps";
+import { STEPS } from "./../../../../steps";
 import { Navigate, useNavigate } from "react-router-dom";
 import SaveNextButtons from "../../saveNextButtons/SaveNextButtons";
 import ShowMore from "../../showMore/showMore";
@@ -13,7 +13,7 @@ import {
   useISDFlowRequest,
 } from "../../../isdFlowContext/IsdFlowContext";
 
-const currentStep = "finalAssessmentStrategy";
+const currentStep = STEPS.FINAL_ASSESSMENT_STRATEGY;
 
 const errorSchema = yup.object({}).required();
 
@@ -58,7 +58,7 @@ const FinalAssessmentStrategyForm = () => {
       className="isd-flow-form"
       onSubmit={handleSubmit(submitFinalAssessmentStrategyForm)}
     >
-      <h3 className="form-title">{getStepName(currentStep)}</h3>
+      <h3 className="form-title">{currentStep}</h3>
       <fieldset>
         <div className="field-title">Purpose</div>
         <div className="field-text">

@@ -1,5 +1,5 @@
 import "./StepsMenu.scss";
-import { stepsSequence, getStepName } from "./../../../steps";
+import { STEPS_SEQUENCE } from "./../../../steps";
 import TickCircleSolid from "../../../../assets/icons/tick-circle-solid.svg";
 
 const MenuBlock = ({ step, state }) => {
@@ -21,13 +21,13 @@ const MenuBlock = ({ step, state }) => {
 const StepsMenu = ({ currentStep }) => {
   let state = "completed";
 
-  const menu = stepsSequence.map((step) => {
-    const key = getStepName(step).split(" ").join("_");
+  const menu = STEPS_SEQUENCE.map((step) => {
+    const key = step.split(" ").join("_");
     if (step === currentStep) {
       state = "next";
-      return <MenuBlock key={key} step={getStepName(step)} state="current" />;
+      return <MenuBlock key={key} step={step} state="current" />;
     } else {
-      return <MenuBlock key={key} step={getStepName(step)} state={state} />;
+      return <MenuBlock key={key} step={step} state={state} />;
     }
   });
 

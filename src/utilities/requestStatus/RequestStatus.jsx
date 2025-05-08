@@ -1,9 +1,11 @@
 import "./RequestStatus.scss";
-import { statuses, statusColors } from "../statuses";
+import { convertStatusStringToLiteral, STATUS_COLORS } from "../statuses";
 
 const RequestStatus = ({ status }) => {
-  const classes = `request-status ${statusColors[status]}`;
-  const nbspStatus = statuses[status].split(" ").join("\u00A0");
+  const classes = `request-status ${
+    STATUS_COLORS[convertStatusStringToLiteral(status)]
+  }`;
+  const nbspStatus = status.split(" ").join("\u00A0");
   return <span className={classes}>{nbspStatus}</span>;
 };
 

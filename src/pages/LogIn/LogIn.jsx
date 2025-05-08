@@ -7,10 +7,15 @@ import GoogleIcon from "../../assets/icons/google.svg";
 import { Link } from "react-router-dom";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { MyInput } from "../../utilities/utils";
+import {
+  MyInput,
+  retrieveRoleFromGetUserRoleResponse,
+} from "../../utilities/utils";
 import useUserAuthApi from "../../utilities/formPostLogic/userAuthApi";
 import React from "react";
 import { userLoggedIn } from "../../redux/slices/authSlice";
+import { setCurrentUserRole } from "../../redux/slices/currentUserSlice";
+import { useLazyGetUserDetailsQuery } from "../../redux/RTKQueries/usersQuery";
 
 const errorSchema = yup
   .object({
@@ -30,15 +35,24 @@ const LogIn = () => {
   const navigate = useNavigate();
   const { submitForm } = useUserAuthApi();
   const [submitError, setSubmitError] = useState(false);
+  const [fetchUserRole] = useLazyGetUserDetailsQuery();
 
   const submitLogIn = async (data) => {
     try {
       const result = await submitForm("signin", data);
       dispatch(userLoggedIn(result));
-
+      const response = await fetchUserRole();
+      const userRole = retrieveRoleFromGetUserRoleResponse(response);
+      dispatch(setCurrentUserRole({ role: userRole }));
       navigate("/requests");
     } catch (error) {
-      setSubmitError(true);
+      console.log(error);
+      if (error.message) {
+        setSubmitError(error.message);
+      }
+      if (error.status) {
+        setSubmitError("Login Error...");
+      }
 
       setTimeout(() => {
         setSubmitError(false);
@@ -67,6 +81,7 @@ const LogIn = () => {
             label="Password"
             type="password"
             placeholder="**"
+            value="12345678Qq!"
             {...register("password")}
           />
           <p>{errors.password?.message}</p>
@@ -74,7 +89,7 @@ const LogIn = () => {
         <div className="button-container">
           {/* Can replace later for default loading and submission success messages */}
           {isSubmitting && <div className="loading-message">Loading...</div>}
-          {submitError && <p className="error-message">Login error...</p>}
+          {submitError && <p className="error-message">{submitError}</p>}
           <button className="button signup" disabled={isSubmitting}>
             Log In
           </button>

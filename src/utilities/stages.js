@@ -1,11 +1,11 @@
-const stages = {
-    newCourseRequest: "New Course Request",
-    needsAnalysis: "Needs Analysis",
-    objectives: "Objectives",
-    finalAssessmentStrategy: "Final Assessment Strategy",
-    courseStructure: "Course Structure",
-    courseStrategy: "Course Strategy",
-    storyboard: "Storyboard",
+export const STAGES = {
+    NEW_COURSE_REQUEST: "New Course Request",
+    NEEDS_ANALYSIS: "Needs Analysis",
+    OBJECTIVE: "Objective",
+    FINAL_ASSESSMENT_STRATEGY: "Final Assessment Strategy",
+    COURSE_STRUCTURE: "Course Structure",
+    COURSE_STRATEGY: "Course Strategy",
+    STORYBOARD: "Storyboard",
 };
 
-export default stages;
+export const convertStageStringToLiteral = stage => stage.split(" ").join("_").toUpperCase();

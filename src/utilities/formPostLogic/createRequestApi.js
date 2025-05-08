@@ -1,10 +1,12 @@
 // useAuthApi.js
 import { useCreateRequestMutation } from "../../redux/RTKQueries/requestsQuery";
+import { STAGES } from "../stages";
+import { STATUSES } from "../statuses";
 
 
 const statusAndStage = {
-	status: 'supervisorReview',
-	stage: 'newCourseRequest',
+	status: STATUSES.SUPERVISOR_REVIEW,
+	stage: STAGES.NEW_COURSE_REQUEST,
 	assignedTo: "unassigned",
 }
 

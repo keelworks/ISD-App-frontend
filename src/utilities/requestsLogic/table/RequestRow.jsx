@@ -1,15 +1,17 @@
 import "./RequestRow.scss";
 import RequestStatus from "../../requestStatus/RequestStatus";
-import stages from "../../stages";
 import DateFormatter from "./../../DateFormatter";
+import { STAGES, convertStageStringToLiteral } from "../../stages";
 
-const RequestRow = ({ request }) => {
+const RequestRow = ({ request, onShowRequest }) => {
   return (
-    <tr className="request-row">
+    <tr className="request-row" onClick={onShowRequest}>
       <td className="request-name">{request.requestName}</td>
       <td className="assigned-to">{request.assignedTo}</td>
       <td className="last-updated">{DateFormatter(request.updatedAt)}</td>
-      <td className="stage">{stages[request.stage]}</td>
+      <td className="stage">
+        {STAGES[convertStageStringToLiteral(request.stage)]}
+      </td>
       <td className="status">
         <RequestStatus status={request.status} />
       </td>

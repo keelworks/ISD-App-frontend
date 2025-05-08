@@ -5,7 +5,7 @@ import { ISDFlowRequestProvider } from "../isdFlowContext/IsdFlowContext";
 // TODO: need to retrieve info from backend
 const info = {
   courseName: "Reducing issues in manufacturing workflow",
-  status: "inProgress",
+  status: "In Progress",
   projectId: "ID13405GE3045",
   deliveryDate: "Thu Feb 01 2024 00:00:00 GMT-0800 (Pacific Standard Time)",
   lastUpdated: "Fri Apr 12 2024 00:00:00 GMT-0700 (Pacific Daylight Time)",

@@ -10,6 +10,7 @@ import {
   SignUp,
   Requests,
   CourseRequest,
+  CourseRequestById,
   AccountSetUpEmail,
   AccountSetUpNamePassword,
   AccountSetUpCompanyName,
@@ -21,6 +22,7 @@ import {
   ISDFlowFinalAssessmentStrategy,
   ISDFlowCourseStructure,
   ISDFlowCourseStrategyDocument,
+  NewCourseRequestReview,
 } from "./pages";
 import { useSelector } from "react-redux";
 import { selectCurrentToken } from "./redux/slices/authSlice";
@@ -50,6 +52,10 @@ function App() {
               <Routes>
                 <Route path="/requests" element={<Requests />} />
                 <Route path="/course_request" element={<CourseRequest />} />
+                <Route
+                  path="/course_request/:currentRequestId"
+                  element={<CourseRequestById />}
+                />
                 <Route
                   path="/accountsetup/email"
                   element={<AccountSetUpEmail />}
@@ -83,7 +89,11 @@ function App() {
                 <Route
                   path="/isdflow/course_strategy_document"
                   element={<ISDFlowCourseStrategyDocument />}
-                />{" "}
+                />
+                <Route
+                  path="/review/new_course_request/:currentRequestId"
+                  element={<NewCourseRequestReview />}
+                />
               </Routes>
             </ProtectedRoute>
           }

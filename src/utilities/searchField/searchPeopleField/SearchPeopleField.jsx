@@ -13,22 +13,34 @@ const SearchPeopleField = ({
   setError,
   clearErrors,
   submitCount,
+  peopleRequiredToAttend = [],
+  allowOnlyOneToSelect = false,
 }) => {
   const [searchResults, setSearchResults] = useState([]);
-  const [selectedEmails, setSelectedEmails] = useState([]);
+  const [selectedEmails, setSelectedEmails] = useState(peopleRequiredToAttend);
   const [input, setInput] = useState("");
 
-  register("peopleRequiredToAttend");
+  const capitalizeEveryStringInArray = (array) => {
+    const capitalized = array.map((s, i) =>
+      i === 0 ? s : s.charAt(0).toUpperCase() + s.slice(1)
+    );
+    return capitalized;
+  };
+
+  const nameToRegister = capitalizeEveryStringInArray(name.split("_")).join("");
+
+  register(nameToRegister);
 
   useEffect(() => {
-    setValue("peopleRequiredToAttend", selectedEmails);
+    setValue(nameToRegister, selectedEmails);
+    console.log(submitCount);
     if (selectedEmails.length === 0 && submitCount > 0) {
-      setError("peopleRequiredToAttend", {
+      setError(nameToRegister, {
         type: "custom",
         message: "Select at least one email",
       });
     } else {
-      clearErrors("peopleRequiredToAttend");
+      clearErrors(nameToRegister);
     }
   }, [selectedEmails]);
 
@@ -55,6 +67,7 @@ const SearchPeopleField = ({
           selectedEmails={selectedEmails}
           setSelectedEmails={setSelectedEmails}
           setInput={setInput}
+          allowOnlyOneToSelect={allowOnlyOneToSelect}
         />
       )}
     </div>

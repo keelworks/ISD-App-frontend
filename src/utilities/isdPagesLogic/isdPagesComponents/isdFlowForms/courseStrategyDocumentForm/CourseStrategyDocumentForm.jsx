@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import React, { useState } from "react";
-import { getStepName, steps } from "../../../../steps";
+import { STEPS } from "../../../../steps";
 import SaveNextButtons from "../../saveNextButtons/SaveNextButtons";
 import ShowMore from "../../showMore/showMore";
 import { useNavigate } from "react-router-dom";
@@ -11,7 +11,7 @@ import { useISDFlowRequest } from "../../../isdFlowContext/IsdFlowContext";
 import TitlePopup from "../../popups/titlePopup/TitlePopup";
 import LessonPopup from "../../popups/lessonPopup/LessonPopup";
 
-const currentStep = "courseStrategyDocument";
+const currentStep = STEPS.COURSE_STRATEGY_DOCUMENT;
 
 const errorSchema = yup.object({}).required();
 
@@ -140,7 +140,7 @@ const CourseStrategyDocumentForm = () => {
       className="isd-flow-form"
       onSubmit={handleSubmit(submitCourseStrategyDocumentForm)}
     >
-      <h3 className="form-title">{getStepName(currentStep)}</h3>
+      <h3 className="form-title">{currentStep}</h3>
       <fieldset>
         <div className="field-title">Purpose</div>
         <div className="field-text">

@@ -6,9 +6,14 @@ const SearchResultsList = ({
   selectedEmails,
   setSelectedEmails,
   setInput,
+  allowOnlyOneToSelect,
 }) => {
   const handleEmailClick = (email) => {
-    setSelectedEmails([...selectedEmails, email]);
+    if (allowOnlyOneToSelect) {
+      setSelectedEmails([email]);
+    } else {
+      setSelectedEmails([...selectedEmails, email]);
+    }
     setInput("");
     setSearchResults([]);
   };

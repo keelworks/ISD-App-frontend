@@ -1,6 +1,7 @@
 import ISDFlowPage from "../../../utilities/isdPagesLogic/isdFlowPage/ISDFlowPage";
+import { STEPS } from "../../../utilities/steps";
 
-const currentStep = "objective";
+const currentStep = STEPS.OBJECTIVE;
 
 const Objective = () => {
   return <ISDFlowPage currentStep={currentStep}></ISDFlowPage>;

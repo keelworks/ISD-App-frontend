@@ -5,14 +5,14 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { MyInput, MyTextArea } from "../../../../../utilities/utils";
 import ShowMore from "../../showMore/showMore";
 import SaveNextButtons from "../../saveNextButtons/SaveNextButtons";
-import { getStepName } from "./../../../../steps";
+import { STEPS } from "./../../../../steps";
 import { useNavigate } from "react-router-dom";
 import {
   useISDFlowDispatch,
   useISDFlowRequest,
 } from "../../../isdFlowContext/IsdFlowContext";
 
-const currentStep = "needsAnalysis";
+const currentStep = STEPS.NEEDS_ANALYSIS;
 
 const errorSchema = yup.object({}).required();
 
@@ -35,7 +35,7 @@ const NeedsAnalysisForm = () => {
       className="isd-flow-form"
       onSubmit={handleSubmit(submitNeedsAnalysisForm)}
     >
-      <h3 className="form-title">{getStepName(currentStep)}</h3>
+      <h3 className="form-title">{currentStep}</h3>
       <fieldset>
         <div className="field-title">Purpose</div>
         <div className="field-text">

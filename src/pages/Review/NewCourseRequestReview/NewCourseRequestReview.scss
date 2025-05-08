@@ -1,0 +1,97 @@
+@import "../../../styles/variables";
+
+.access-error-message {
+    margin: 3rem auto;
+    color: $font-color-black;
+}
+
+.new-course-request-review-wrapper {
+    width: 100%;
+    color: $font-color-black;
+    .new-course-request-review-container {
+        width: 80%;
+        margin: auto;
+        padding-top: 2.5rem;
+        display: flex;
+        flex-direction: column;
+
+        .title-status-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2.5rem;
+            
+
+            .title-container {
+                display: flex;
+                flex-direction: column;
+
+                .title {
+                    font-weight: $fontWeightBold;
+                    font-size: $font-size-medium;
+                }
+
+                .date-created-container {
+                    display: flex;
+                    gap: 1rem;
+                    font-size: $font-size-semi-small;
+
+                    .date-created-header {
+                        font-weight: $fontWeightBold;
+                    }
+
+                    .date-created {
+                        font-weight: $fontWeightRegular;
+                        
+                    }
+                }
+            }
+        }
+        .new-request-form-review {
+            margin: 0;
+            display: flex;
+            gap: 2rem;
+            justify-content: space-between;
+
+            .new-request-form-review-fields {
+                flex: 5 1 60%;
+                max-width: unset;
+                display: flex;
+                flex-direction: column;
+                gap: 2rem;
+
+                .button-container {
+                    display: flex;
+                    justify-content: space-between;
+
+                    
+
+                    .reject {
+                        background-color: $button-red-background;
+                        &:hover {
+                            background-color: darken($button-red-background, 10%);
+                            border-color: transparent;
+                        }
+                        
+                    }
+                    .assign {
+                        background-color: $button-blue-background;
+                        &:hover {
+                            background-color: darken($button-blue-background, 10%);
+                            border-color: transparent;
+                        }
+                    }
+
+                    .reject, .assign {
+                        color: $font-color-white;
+                        
+                    }
+                }
+
+                
+            }
+            .assign-to-form {
+                flex: 2 1 40%;
+            }
+        }
+    }
+}

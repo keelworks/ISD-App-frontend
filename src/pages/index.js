@@ -3,6 +3,7 @@ export { default as LogIn } from './LogIn/LogIn';
 export { default as SignUp } from './SignUp/SignUp';
 export { default as Requests } from './Requests/Requests';
 export { default as CourseRequest } from './CourseRequest/CourseRequest';
+export { default as CourseRequestById } from './CourseRequestById/CourseRequestById';
 export { default as AccountSetUpEmail } from './AccountSetUp/Email/Email';
 export { default as AccountSetUpNamePassword } from './AccountSetUp/NamePassword/NamePassword';
 export { default as AccountSetUpCompanyName } from './AccountSetUp/CompanyName/CompanyName';
@@ -14,3 +15,4 @@ export { default as ISDFlowFinalAssessmentStrategy } from './ISDFlow/FinalAssess
 export { default as ISDFlowCourseStructure } from './ISDFlow/CourseStructure/CourseStructure';
 export { default as ISDFlowObjective } from './ISDFlow/Objective/Objective';
 export { default as ISDFlowCourseStrategyDocument } from './ISDFlow/CourseStrategyDocument/CourseStrategyDocument';
+export { default as NewCourseRequestReview } from './Review/NewCourseRequestReview/NewCourseRequestReview';

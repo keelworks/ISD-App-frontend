@@ -1,9 +1,12 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import SearchResultsList from '../../utilities/searchField/searchComponenets/searchResultsList/SearchResultsList';
 import { addAuthTokenToHeader } from '../../utilities/utils';
 
 // All api calls related to auth process params will need to be adjusted accordingly to backend specifications
 export const requestsApi = createApi({
 	reducerPath: 'requestsApi',
+	refetchOnMountOrArgChange: true,
+	tagTypes: ['Request'],
 	baseQuery: fetchBaseQuery({
 		baseUrl: 'http://localhost:3000',
 		prepareHeaders(headers) {
@@ -20,7 +23,7 @@ export const requestsApi = createApi({
 				method: 'POST',
 				body: newRequest,
 			}),
-			invalidatesTags: ['Request']
+			invalidatesTags: ['Requests'],
 		}),
 		getRequests: builder.query({
 			query: () => ({
@@ -28,12 +31,32 @@ export const requestsApi = createApi({
 				method: 'GET',
 			}),
 			providesTags: (result=[], error, arg) => [
-				'Request',
-				...result.map(({id}) => ({type: 'Request', id}))
+				'Requests',
+				...result.map(({id}) => ({type: 'Requests', id}))
 			]
+		}),
+		getRequestById: builder.query({
+			query: (requestId) => ({
+				url: `/api/requests/${requestId}`,
+				method: 'GET',
+			}),
+			providesTags: (result = [], error, arg) => 
+			{ console.log(result);
+				return [
+				'Request',
+				({type: 'Request', id: result.request_id })
+			]}
+		}),
+		updateRequestById: builder.mutation({
+			query: updatedRequest => ({
+				url: `/api/requests/updateRequest/${updatedRequest.request_id}`,
+				method: 'POST',
+				body: updatedRequest,
+			}),
+			invalidatesTags: (result=[]) => [({type: 'Request', id: result.request_id})]
 		}),
 	}),
 });
 
 // Standard naming convention rtk
-export const { useCreateRequestMutation, useGetRequestsQuery } = requestsApi;
+export const { useCreateRequestMutation, useGetRequestsQuery, useGetRequestByIdQuery, useUpdateRequestByIdMutation } = requestsApi;
