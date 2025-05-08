@@ -2,55 +2,14 @@ import "./RequestsTable.scss";
 import RequestRow from "./RequestRow";
 import RequestRowSmallScreen from "./RequestRowSmallScreen";
 import { useState, useEffect } from "react";
-import { statuses } from "../../statuses";
-import { useSelector } from "react-redux";
-import { selectAllRequests } from "../../../redux/slices/requestsSlice";
 import { useGetRequestsQuery } from "../../../redux/RTKQueries/requestsQuery";
-
-// let info = [
-//   {
-//     requestName: "Reducing issues in manufacturing workflow",
-//     assignedTo: "John Doe",
-//     lastUpdated: "Thu Feb 01 2024 00:00:00 GMT-0800 (Pacific Standard Time)",
-//     stage: "storyboard",
-//     status: "stakeholderReview",
-//   },
-//   {
-//     requestName: "Reducing issues in manufacturing workflow",
-//     assignedTo: "John Doe",
-//     lastUpdated: "Tue Nov 07 2023 00:00:00 GMT-0800 (Pacific Standard Time)",
-//     stage: "needsAnalysis",
-//     status: "qaReview",
-//   },
-//   {
-//     requestName: "Reducing issues in manufacturing workflow",
-//     assignedTo: "John Doe",
-//     lastUpdated: "Thu Jun 13 2024 13:29:28 GMT-0700 (Pacific Daylight Time)",
-//     stage: "objectives",
-//     status: "status",
-//   },
-//   {
-//     requestName: "Reducing issues in manufacturing workflow",
-//     assignedTo: "John Doe",
-//     lastUpdated: "Fri Apr 12 2024 00:00:00 GMT-0700 (Pacific Daylight Time)",
-//     stage: "courseStructure",
-//     status: "inProgress",
-//   },
-//   {
-//     requestName: "Reducing issues in manufacturing workflow",
-//     assignedTo: "John Doe",
-//     lastUpdated: "Fri Apr 13 2024 00:00:00 GMT-0700 (Pacific Daylight Time)",
-//     stage: "needsAnalysis",
-//     status: "canceled",
-//   },
-//   {
-//     requestName: "Reducing issues in manufacturing workflow",
-//     assignedTo: "John Doe",
-//     lastUpdated: "Fri Apr 09 2024 00:00:00 GMT-0700 (Pacific Daylight Time)",
-//     stage: "Storyboard",
-//     status: "completed",
-//   },
-// ];
+import { STATUSES } from "../../statuses";
+import { useDispatch, useSelector } from "react-redux";
+import { selectCurrentUserRole } from "../../../redux/slices/currentUserSlice";
+import ROLES from "../../roles";
+import { STAGES } from "../../stages";
+import { useNavigate } from "react-router-dom";
+import { requestClicked } from "../../../redux/slices/currentRequestSlice";
 
 const sortRequests = (requests) =>
   requests.toSorted((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt));
@@ -59,9 +18,9 @@ const splitToNeedReviewAndNoNeedReviewRequests = (requests) => {
   const noReviewRequests = [];
   const needReviewRequests = requests.filter((r) => {
     if (
-      r.status == "qaReview" ||
-      r.status == "supervisorReview" ||
-      r.status == "stakeholderReview"
+      r.status == STATUSES.QA_REVIEW ||
+      r.status == STATUSES.SUPERVISOR_REVIEW ||
+      r.status == STATUSES.STAKEHOLDER_REVIEW
     ) {
       return r;
     } else {
@@ -76,11 +35,11 @@ const filterRequestsByState = (requests, state) => {
   return requests.filter((r) => {
     if (state === "active") {
       if (
-        r.status === "inProgress" ||
-        r.status === "updating" ||
-        r.status === "qaReview" ||
-        r.status === "supervisorReview" ||
-        r.status === "stakeholderReview"
+        r.status === STATUSES.IN_PROGRESS ||
+        r.status === STATUSES.UPDATING ||
+        r.status === STATUSES.QA_REVIEW ||
+        r.status === STATUSES.SUPERVISOR_REVIEW ||
+        r.status === STATUSES.STAKEHOLDER_REVIEW
       ) {
         return r;
       }
@@ -138,6 +97,9 @@ const displayInfoMessage = (width, message) => {
 
 const RequestsTable = ({ tab }) => {
   const [width, setWidth] = useState(window.innerWidth);
+  const currentUserRole = useSelector(selectCurrentUserRole);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const handleResize = () => {
@@ -182,20 +144,62 @@ const RequestsTable = ({ tab }) => {
       tab
     );
 
+    const showClickedRequest = (clickedRequest) => {
+      console.log(currentUserRole);
+      console.log(clickedRequest);
+      switch (currentUserRole) {
+        case ROLES.STAKEHOLDER:
+          if (
+            clickedRequest.stage === STAGES.NEW_COURSE_REQUEST &&
+            clickedRequest.status === STATUSES.STAKEHOLDER_REVIEW
+          ) {
+            dispatch(requestClicked(clickedRequest));
+            // dispatch the action. Something like review
+            console.log(clickedRequest);
+            navigate(`/course_request/${clickedRequest.request_id}`);
+          }
+          break;
+          break;
+        case ROLES.ISD_SUPERVISOR:
+          if (
+            clickedRequest.stage === STAGES.NEW_COURSE_REQUEST &&
+            clickedRequest.status === STATUSES.SUPERVISOR_REVIEW
+          ) {
+            dispatch(requestClicked(clickedRequest));
+            // dispatch the action. Something like review
+            console.log(clickedRequest);
+            navigate(`/review/new_course_request/${clickedRequest.request_id}`);
+          }
+          break;
+        default:
+          console.log("Unknown role!");
+      }
+      // if stage = new course request && status = supervisor review && userRole = isd supervisor -> show new course request review for isd supervisor
+      // if stage = new course request && status = stakeholder review && userRole = stakeholder -> show new course request with comments
+    };
+
     if (width < 1000) {
       return (
         <>
           {needReviewRequestsByState.length > 0 && (
             <section className="requests-table-small need-review">
               {needReviewRequestsByState.map((request, index) => (
-                <RequestRowSmallScreen key={index} request={request} />
+                <RequestRowSmallScreen
+                  key={index}
+                  request={request}
+                  onShowRequest={() => showClickedRequest(request)}
+                />
               ))}
             </section>
           )}
           {noReviewRequestsByState.length > 0 && (
             <section className="requests-table-small">
               {noReviewRequestsByState.map((request, index) => (
-                <RequestRowSmallScreen key={index} request={request} />
+                <RequestRowSmallScreen
+                  key={index}
+                  request={request}
+                  onShowRequest={() => showClickedRequest(request)}
+                />
               ))}
             </section>
           )}
@@ -217,7 +221,11 @@ const RequestsTable = ({ tab }) => {
           {needReviewRequestsByState.length > 0 && (
             <tbody className="need-review">
               {needReviewRequestsByState.map((request, index) => (
-                <RequestRow key={index} request={request} />
+                <RequestRow
+                  key={index}
+                  request={request}
+                  onShowRequest={() => showClickedRequest(request)}
+                />
               ))}
               <tr className="table-gap">
                 <td colSpan={6}></td>
@@ -226,7 +234,11 @@ const RequestsTable = ({ tab }) => {
           )}
           <tbody>
             {noReviewRequestsByState.map((request, index) => (
-              <RequestRow key={index} request={request} />
+              <RequestRow
+                key={index}
+                request={request}
+                onShowRequest={() => showClickedRequest(request)}
+              />
             ))}
           </tbody>
         </table>

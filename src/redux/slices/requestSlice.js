@@ -3,6 +3,7 @@ import { STAGES } from '../../utilities/stages';
 import { STATUSES } from '../../utilities/statuses';
 
 const newRequest = {
+	organizationId: '',
 	requestName: '',
 	status: STATUSES.SUPERVISOR_REVIEW,
 	stage: STAGES.NEW_COURSE_REQUEST,

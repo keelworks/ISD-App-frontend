@@ -1,0 +1,19 @@
+@import "../../../styles/variables";
+
+.back-button {
+    font-size: $font-size-semi-small;
+    font-weight: $fontWeightBold;
+    color: $font-color-black;
+    border-radius: 0;
+    transition: none;
+
+    &:hover {
+        background-color: darken($default-background, 10%);
+        border-color: transparent;
+    }
+
+    .back-button-text {
+        vertical-align: middle;
+    }
+
+}

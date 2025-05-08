@@ -106,3 +106,24 @@ export const addAuthTokenToHeader = (headers) => {
     return headers.set("authorization", token);
   }
 };
+
+export const retrieveRoleFromGetUserRoleResponse = (response) => {
+  const data = response.data[0];
+  if (!data) {
+    throw new Error("No such user.");
+  }
+
+  // Is the user a member of organization with role?
+  const members = data.Members;
+  if (members && members[0]) {
+    return members[0].role;
+  }
+
+  // Is the user an admin of an organization?
+  const organizations = data.Organizations;
+  if (organizations && organizations[0]) {
+    return "Admin";
+  }
+
+  throw new Error("User has no assigned role");
+};

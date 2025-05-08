@@ -2,7 +2,6 @@ import "./ISDFlowPageContainer.scss";
 import RequestStatus from "../../../requestStatus/RequestStatus";
 import StepsMenu from "../stepsMenu/StepsMenu";
 import ProjectInfo from "../projectInfo/ProjectInfo";
-import LessThanIcon from "../../../../assets/icons/less-than.svg";
 import {
   NeedsAnalysisForm,
   ObjectiveForm,
@@ -12,18 +11,20 @@ import {
 } from "../isdFlowForms";
 import { useNavigate } from "react-router-dom";
 import { useISDFlowRequest } from "../../isdFlowContext/IsdFlowContext";
+import { STEPS } from "../../../steps";
+import BackButton from "../../../reusableComponents/BackButton/BackButton";
 
 const getCurrentStepForm = (currentStep) => {
   switch (currentStep) {
-    case "needsAnalysis":
+    case STEPS.NEEDS_ANALYSIS:
       return <NeedsAnalysisForm />;
-    case "objective":
+    case STEPS.OBJECTIVE:
       return <ObjectiveForm />;
-    case "finalAssessmentStrategy":
+    case STEPS.FINAL_ASSESSMENT_STRATEGY:
       return <FinalAssessmentStrategyForm />;
-    case "courseStructure":
+    case STEPS.COURSE_STRUCTURE:
       return <CourseStructureForm />;
-    case "courseStrategyDocument":
+    case STEPS.COURSE_STRATEGY_DOCUMENT:
       return <CourseStrategyDocumentForm />;
     default:
       console.log(
@@ -38,19 +39,19 @@ const ISDFlowPageContainer = ({ currentStep }) => {
 
   const handleBackButtonClick = () => {
     switch (currentStep) {
-      case "needsAnalysis":
+      case STEPS.NEEDS_ANALYSIS:
         navigate("/requests");
         break;
-      case "objective":
+      case STEPS.OBJECTIVE:
         navigate("/isdflow/needs_analysis");
         break;
-      case "finalAssessmentStrategy":
+      case STEPS.FINAL_ASSESSMENT_STRATEGY:
         navigate("/isdflow/objective");
         break;
-      case "courseStructure":
+      case STEPS.COURSE_STRUCTURE:
         navigate("/isdflow/final_assessment_strategy");
         break;
-      case "courseStrategyDocument":
+      case STEPS.COURSE_STRATEGY_DOCUMENT:
         navigate("/isdflow/course_structure");
         break;
       default:
@@ -62,21 +63,7 @@ const ISDFlowPageContainer = ({ currentStep }) => {
   return (
     <div className="isd-flow-wrapper">
       <div className="isd-flow-container">
-        <div className="isd-flow-back-button-container">
-          <button
-            type="button"
-            className="isd-flow-back-button"
-            onClick={handleBackButtonClick}
-          >
-            <img
-              src={LessThanIcon}
-              alt="Back Button Sign"
-              className="back-button-icon"
-            />
-            &nbsp;Back
-          </button>
-        </div>
-
+        <BackButton handleBackButtonClick={handleBackButtonClick} />
         <div className="isd-flow-title-container">
           <h3 className="isd-flow-title">{request.courseName}</h3>
           <div className="isd-flow-status">

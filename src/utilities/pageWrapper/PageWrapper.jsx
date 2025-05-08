@@ -2,12 +2,14 @@ import "./PageWrapper.scss";
 import CircleUser from "./../../assets/icons/circle-user.svg";
 import { useDispatch } from "react-redux";
 import { userLoggedOut } from "../../redux/slices/authSlice";
+import { removeCurrentUserRole } from "../../redux/slices/currentUserSlice";
 
 const PageWrapper = ({ children }) => {
   const dispatch = useDispatch();
 
   const handleLogOut = () => {
     dispatch(userLoggedOut());
+    dispatch(removeCurrentUserRole());
   };
   return (
     <main className="requests-wrapper">

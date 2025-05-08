@@ -1,21 +1,17 @@
-export const stepsSequence = [
-  "needsAnalysis",
-  "objective",
-  "finalAssessmentStrategy",
-  "courseStructure",
-  "courseStrategyDocument",
-  "storyboard",
-];
-
-export const steps = {
-  needsAnalysis: "Needs Analysis",
-  objective: "Objective",
-  finalAssessmentStrategy: "Final Assessment Strategy",
-  courseStructure: "Course Structure",
-  courseStrategyDocument: "Course Strategy Document",
-  storyboard: "Storyboard",
+export const STEPS = {
+  NEEDS_ANALYSIS: "Needs Analysis",
+  OBJECTIVE: "Objective",
+  FINAL_ASSESSMENT_STRATEGY: "Final Assessment Strategy",
+  COURSE_STRUCTURE: "Course Structure",
+  COURSE_STRATEGY_DOCUMENT: "Course Strategy Document",
+  STORYBOARD: "Storyboard",
 };
 
-export const getStepName = (currentStep) => {
-  return steps[currentStep];
-}
+export const STEPS_SEQUENCE = [
+  STEPS.NEEDS_ANALYSIS,
+  STEPS.OBJECTIVE,
+  STEPS.FINAL_ASSESSMENT_STRATEGY,
+  STEPS.COURSE_STRUCTURE,
+  STEPS.COURSE_STRATEGY_DOCUMENT,
+  STEPS.STORYBOARD,
+];

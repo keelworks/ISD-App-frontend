@@ -11,13 +11,13 @@ import * as yup from "yup";
 import ShowMore from "../../showMore/showMore";
 import SaveNextButtons from "../../saveNextButtons/SaveNextButtons";
 import { useNavigate } from "react-router-dom";
-import { getStepName } from "./../../../../steps";
+import { STEPS } from "./../../../../steps";
 import {
   useISDFlowDispatch,
   useISDFlowRequest,
 } from "../../../isdFlowContext/IsdFlowContext";
 
-const currentStep = "objective";
+const currentStep = STEPS.OBJECTIVE;
 
 const errorSchema = yup.object({}).required();
 
@@ -54,7 +54,7 @@ const ObjectiveForm = () => {
       className="isd-flow-form"
       onSubmit={handleSubmit(submitObjectiveForm)}
     >
-      <h3 className="form-title">{getStepName(currentStep)}</h3>
+      <h3 className="form-title">{currentStep}</h3>
       <fieldset>
         <div className="field-title">Purpose</div>
         <div className="field-text">
