@@ -5,11 +5,12 @@ import { useState, useEffect } from "react";
 import { useGetRequestsQuery } from "../../../redux/RTKQueries/requestsQuery";
 import { STATUSES } from "../../statuses";
 import { useDispatch, useSelector } from "react-redux";
-import { selectCurrentUserRole } from "../../../redux/slices/currentUserSlice";
+import { selectCurrentUserRoles } from "../../../redux/slices/currentUserSlice";
 import ROLES from "../../roles";
 import { STAGES } from "../../stages";
 import { useNavigate } from "react-router-dom";
 import { requestClicked } from "../../../redux/slices/currentRequestSlice";
+import { doesTheCurrentUserHaveThisRole } from "../../utils";
 
 const sortRequests = (requests) =>
   requests.toSorted((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt));
@@ -97,7 +98,7 @@ const displayInfoMessage = (width, message) => {
 
 const RequestsTable = ({ tab }) => {
   const [width, setWidth] = useState(window.innerWidth);
-  const currentUserRole = useSelector(selectCurrentUserRole);
+  const currentUserRoles = useSelector(selectCurrentUserRoles);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -145,34 +146,33 @@ const RequestsTable = ({ tab }) => {
     );
 
     const showClickedRequest = (clickedRequest) => {
-      console.log(currentUserRole);
+      console.log(currentUserRoles);
       console.log(clickedRequest);
-      switch (currentUserRole) {
-        case ROLES.STAKEHOLDER:
-          if (
-            clickedRequest.stage === STAGES.NEW_COURSE_REQUEST &&
-            clickedRequest.status === STATUSES.STAKEHOLDER_REVIEW
-          ) {
-            dispatch(requestClicked(clickedRequest));
-            // dispatch the action. Something like review
-            console.log(clickedRequest);
-            navigate(`/course_request/${clickedRequest.request_id}`);
-          }
-          break;
-          break;
-        case ROLES.ISD_SUPERVISOR:
-          if (
-            clickedRequest.stage === STAGES.NEW_COURSE_REQUEST &&
-            clickedRequest.status === STATUSES.SUPERVISOR_REVIEW
-          ) {
-            dispatch(requestClicked(clickedRequest));
-            // dispatch the action. Something like review
-            console.log(clickedRequest);
-            navigate(`/review/new_course_request/${clickedRequest.request_id}`);
-          }
-          break;
-        default:
-          console.log("Unknown role!");
+
+      if (doesTheCurrentUserHaveThisRole(currentUserRoles, ROLES.STAKEHOLDER)) {
+        if (
+          clickedRequest.stage === STAGES.NEW_COURSE_REQUEST &&
+          clickedRequest.status === STATUSES.STAKEHOLDER_REVIEW
+        ) {
+          dispatch(requestClicked(clickedRequest));
+          // dispatch the action. Something like review
+          console.log(clickedRequest);
+          navigate(`/course_request/${clickedRequest.request_id}`);
+        }
+      }
+
+      if (
+        doesTheCurrentUserHaveThisRole(currentUserRoles, ROLES.ISD_SUPERVISOR)
+      ) {
+        if (
+          clickedRequest.stage === STAGES.NEW_COURSE_REQUEST &&
+          clickedRequest.status === STATUSES.SUPERVISOR_REVIEW
+        ) {
+          dispatch(requestClicked(clickedRequest));
+          // dispatch the action. Something like review
+          console.log(clickedRequest);
+          navigate(`/review/new_course_request/${clickedRequest.request_id}`);
+        }
       }
       // if stage = new course request && status = supervisor review && userRole = isd supervisor -> show new course request review for isd supervisor
       // if stage = new course request && status = stakeholder review && userRole = stakeholder -> show new course request with comments

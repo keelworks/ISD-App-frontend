@@ -1,5 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { useSelector } from "react-redux";
+import { selectCurrentUserRoles } from "../redux/slices/currentUserSlice";
 
 export const MyInput = React.forwardRef(
   ({ name, id, type, label, classNameForLabel, ...rest }, ref) => {
@@ -107,23 +109,40 @@ export const addAuthTokenToHeader = (headers) => {
   }
 };
 
-export const retrieveRoleFromGetUserRoleResponse = (response) => {
-  const data = response.data[0];
+export const retrieveRoleFromGetUserInfoResponse = (response) => {
+  const roles = [];
+  const data = response.data;
   if (!data) {
     throw new Error("No such user.");
   }
 
-  // Is the user a member of organization with role?
-  const members = data.Members;
-  if (members && members[0]) {
-    return members[0].role;
-  }
+  // Is the user a member of organization with a role?
+  const role = data.Members?.[0]?.role;
+  role && roles.push(role);
 
   // Is the user an admin of an organization?
-  const organizations = data.Organizations;
-  if (organizations && organizations[0]) {
-    return "Admin";
-  }
+  const adminRole = data.Organizations?.[0];
+  adminRole && roles.push("Admin");
 
-  throw new Error("User has no assigned role");
+  return roles;
+};
+
+export const retrieveCompanyIdFromGetUserInfoResponse = (response) => {
+  return response.data.Organizations[0].organization_id;
+};
+
+export const doesTheCurrentUserHaveThisRole = (roles, role) => {
+  return roles?.includes(role);
+};
+
+// Used in TeamMembers functionality
+export const transformMembersData = (members) => {
+  return members.map((member) => ({
+    id: member.member_id,
+    name: member.User.name,
+    status: false,
+    role: member.role,
+    email: member.User.email,
+    userId: member.user_id,
+  }));
 };

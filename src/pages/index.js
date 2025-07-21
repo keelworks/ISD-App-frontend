@@ -7,6 +7,7 @@ export { default as CourseRequestById } from './CourseRequestById/CourseRequestB
 export { default as AccountSetUpEmail } from './AccountSetUp/Email/Email';
 export { default as AccountSetUpNamePassword } from './AccountSetUp/NamePassword/NamePassword';
 export { default as AccountSetUpCompanyName } from './AccountSetUp/CompanyName/CompanyName';
+export { default as AccountSetUpAccountSuccessfullyCreated } from './AccountSetUp/AccountSuccessfullyCreated/AccountSuccessfullyCreated';
 export { default as Users } from './AccountSetUp/Users/Users';
 export { default as Error } from './Error/Error';
 export { default as TeamMembers } from './TeamMembers/TeamMembers';

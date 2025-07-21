@@ -7,8 +7,8 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import NewCourseRequestFields from "../../utilities/reusableComponents/NewCourseRequestFields/NewCourseRequestFields";
 import ROLES from "../../utilities/roles";
-import { selectCurrentUserRole } from "../../redux/slices/currentUserSlice";
-import { MyInput } from "../../utilities/utils";
+import { selectCurrentUserRoles } from "../../redux/slices/currentUserSlice";
+import { doesTheCurrentUserHaveThisRole, MyInput } from "../../utilities/utils";
 import { useGetRequestByIdQuery } from "../../redux/RTKQueries/requestsQuery";
 import useUpdateRequestByIdApi from "../../utilities/formPostLogic/updateRequestByIdApi";
 import { STATUSES } from "../../utilities/statuses";
@@ -37,7 +37,7 @@ const CourseRequestById = () => {
     resolver: yupResolver(errorSchema),
   });
   const navigate = useNavigate();
-  const currentUserRole = useSelector(selectCurrentUserRole);
+  const currentUserRoles = useSelector(selectCurrentUserRoles);
   const { currentRequestId } = useParams();
   const {
     data: currentRequest,
@@ -66,7 +66,7 @@ const CourseRequestById = () => {
       console.log(error);
     }
   };
-  if (currentUserRole !== ROLES.STAKEHOLDER) {
+  if (!doesTheCurrentUserHaveThisRole(currentUserRoles, ROLES.STAKEHOLDER)) {
     return (
       <PageWrapper>
         <div className="access-error-message">
