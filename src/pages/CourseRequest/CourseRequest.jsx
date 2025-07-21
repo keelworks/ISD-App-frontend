@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import "./CourseRequest.scss";
 import { Link, useNavigate } from "react-router-dom";
@@ -10,6 +10,7 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import useCreateRequestApi from "../../utilities/formPostLogic/createRequestApi";
 import SearchPeopleField from "../../utilities/searchField/searchPeopleField/SearchPeopleField";
+import CancelConfirmationPopup from "../../utilities/isdPagesLogic/isdPagesComponents/popups/cancelConfirmationPopup/CancelConfirmationPopup";
 
 const errorSchema = yup
   .object({
@@ -37,6 +38,7 @@ const CourseRequest = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { submitForm, form } = useCreateRequestApi();
+  const [showCancelPopup, setShowCancelPopup] = useState(false);
 
   const onSubmit = async (data) => {
     try {
@@ -153,15 +155,22 @@ const CourseRequest = () => {
               <button className="button create-request" type="submit">
                 Create request
               </button>
-              <Link to="/requests">
-                <button className="button cancel" type="button">
-                  Cancel
-                </button>
-              </Link>
+              <button 
+                className="button cancel" 
+                type="button"
+                onClick={() => setShowCancelPopup(true)}
+              >
+                Cancel
+              </button>
             </div>
           </form>
         </div>
       </main>
+      <CancelConfirmationPopup 
+        isVisible={showCancelPopup}
+        onClose={() => setShowCancelPopup(false)}
+        redirectPath="/requests"
+      />
     </PageWrapper>
   );
 };
