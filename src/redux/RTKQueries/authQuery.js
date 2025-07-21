@@ -5,7 +5,7 @@ import { addAuthTokenToHeader } from '../../utilities/utils';
 export const authApi = createApi({
 	reducerPath: 'authApi',
 	baseQuery: fetchBaseQuery({
-		baseUrl: 'http://localhost:3000',
+		baseUrl: 'http://localhost:3000/api/auth',
 		prepareHeaders(headers) {
 			addAuthTokenToHeader(headers);
 			headers.set('Accept', 'application/json');
@@ -16,14 +16,14 @@ export const authApi = createApi({
 	endpoints: builder => ({
 		signup: builder.mutation({
 			query: userInfo => ({
-				url: '/api/auth/register',
+				url: '/register',
 				method: 'POST',
 				body: userInfo,
 			}),
 		}),
 		signin: builder.mutation({
 			query: userInfo => ({
-				url: '/api/auth/login',
+				url: '/login',
 				method: 'POST',
 				body: userInfo,
 			}),

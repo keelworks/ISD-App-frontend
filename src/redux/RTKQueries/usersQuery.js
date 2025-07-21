@@ -5,7 +5,7 @@ import { addAuthTokenToHeader } from '../../utilities/utils';
 export const usersApi = createApi({
 	reducerPath: 'usersApi',
 	baseQuery: fetchBaseQuery({
-		baseUrl: 'http://localhost:3000',
+		baseUrl: 'http://localhost:3000/api/users',
 		prepareHeaders(headers) {
 			addAuthTokenToHeader(headers);
 			headers.set('Accept', 'application/json');
@@ -16,12 +16,13 @@ export const usersApi = createApi({
 	endpoints: builder => ({
 		getUserDetails: builder.query({
 			query: () => ({
-				url: '/api/users',
+				url: '/',
 				method: 'GET',
 			}),
+			transformResponse: (response, meta, arg) => response[0],
 		}),
 	}),
 });
 
 // Standard naming convention rtk
-export const { useLazyGetUserDetailsQuery } = usersApi;
+export const { useLazyGetUserDetailsQuery, useGetUserDetailsQuery } = usersApi;

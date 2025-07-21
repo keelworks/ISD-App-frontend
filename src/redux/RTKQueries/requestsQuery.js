@@ -8,7 +8,7 @@ export const requestsApi = createApi({
 	refetchOnMountOrArgChange: true,
 	tagTypes: ['Request'],
 	baseQuery: fetchBaseQuery({
-		baseUrl: 'http://localhost:3000',
+		baseUrl: 'http://localhost:3000/api/requests',
 		prepareHeaders(headers) {
 			addAuthTokenToHeader(headers);
 			headers.set('Accept', 'application/json');
@@ -19,7 +19,7 @@ export const requestsApi = createApi({
 	endpoints: builder => ({
 		createRequest: builder.mutation({
 			query: newRequest => ({
-				url: '/api/requests',
+				url: '/',
 				method: 'POST',
 				body: newRequest,
 			}),
@@ -27,7 +27,7 @@ export const requestsApi = createApi({
 		}),
 		getRequests: builder.query({
 			query: () => ({
-				url: '/api/requests',
+				url: '/',
 				method: 'GET',
 			}),
 			providesTags: (result=[], error, arg) => [
@@ -37,7 +37,7 @@ export const requestsApi = createApi({
 		}),
 		getRequestById: builder.query({
 			query: (requestId) => ({
-				url: `/api/requests/${requestId}`,
+				url: `/${requestId}`,
 				method: 'GET',
 			}),
 			providesTags: (result = [], error, arg) => 
@@ -49,7 +49,7 @@ export const requestsApi = createApi({
 		}),
 		updateRequestById: builder.mutation({
 			query: updatedRequest => ({
-				url: `/api/requests/updateRequest/${updatedRequest.request_id}`,
+				url: `/updateRequest/${updatedRequest.request_id}`,
 				method: 'POST',
 				body: updatedRequest,
 			}),
