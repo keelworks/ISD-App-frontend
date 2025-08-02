@@ -2,8 +2,9 @@ import { Link } from "react-router-dom";
 import "./NavBar.scss";
 import FilterIcon from "./../../../assets/icons/filter.svg";
 import { useSelector } from "react-redux";
-import { selectCurrentUserRole } from "../../../redux/slices/currentUserSlice";
+import { selectCurrentUserRoles } from "../../../redux/slices/currentUserSlice";
 import ROLES from "../../roles";
+import { doesTheCurrentUserHaveThisRole } from "../../utils";
 
 let activeClasses = "clicked";
 let completedClasses = "";
@@ -28,8 +29,8 @@ const handleTabClick = (onTabClicked, tab) => {
 };
 
 const NavBar = ({ onTabClicked }) => {
-  const currentUserRole = useSelector(selectCurrentUserRole);
-  console.log(currentUserRole);
+  const currentUserRoles = useSelector(selectCurrentUserRoles);
+  console.log(currentUserRoles);
 
   return (
     <div className="nav-bar">
@@ -68,7 +69,10 @@ const NavBar = ({ onTabClicked }) => {
         <li className="search">
           <input type="text" placeholder="Search" />
         </li>
-        {currentUserRole === ROLES.STAKEHOLDER && (
+        {doesTheCurrentUserHaveThisRole(
+          currentUserRoles,
+          ROLES.STAKEHOLDER
+        ) && (
           <li className="create-request">
             <Link to="/course_request">
               <button className="create-request-button">Create Request</button>

@@ -1,0 +1,48 @@
+@import "../../../styles/variables";
+
+.account-successfully-created {
+    .account-created-message {
+        font-weight: $fontWeightMedium;
+        font-size: $font-size-medium;
+        text-align: center;
+        line-height: 140%;
+        margin-top: 1.5rem;
+    }
+
+    .go-to-dashboard {
+        width: 20rem;
+        height: 2.875rem;
+        border-radius: 4px;
+        background-color: $button-blue-background;
+        color: $font-color-white;
+        font-weight: $fontWeightSemiBold;
+        font-size: $font-size-small;
+        line-height: 140%;
+        margin-top: 2rem;
+
+        &:hover {
+            background-color: darken($button-blue-background, 10%);
+        }
+    }
+
+    .register-company {
+        margin-top: 4.4rem;
+        font-weight: $fontWeightSemiBold;
+        font-size: $font-size-small;
+        line-height: 1.5rem;
+
+        .register-company-button {
+            border: none;
+            padding: 0.3rem;
+            font-size: $font-size-small;
+            font-weight: $fontWeightSemiBold;
+            line-height: 1.5rem;
+            background: none;
+            color: $button-blue-background;
+
+            &:hover {
+                background-color: darken($form-white-background, 10%);
+            }
+        }
+    }
+}

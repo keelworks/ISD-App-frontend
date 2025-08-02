@@ -5,14 +5,17 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import PageWrapper from "../../../utilities/pageWrapper/PageWrapper";
 import BackButton from "../../../utilities/reusableComponents/BackButton/BackButton";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { selectCurrentUserRole } from "../../../redux/slices/currentUserSlice";
+import { selectCurrentUserRoles } from "../../../redux/slices/currentUserSlice";
 import { useSelector } from "react-redux";
 import ROLES from "../../../utilities/roles";
 import NewCourseRequestFields from "../../../utilities/reusableComponents/NewCourseRequestFields/NewCourseRequestFields";
 import RequestStatus from "../../../utilities/requestStatus/RequestStatus";
 import DateFormatter from "../../../utilities/DateFormatter";
 import SearchPeopleField from "../../../utilities/searchField/searchPeopleField/SearchPeopleField";
-import { MyInput } from "../../../utilities/utils";
+import {
+  doesTheCurrentUserHaveThisRole,
+  MyInput,
+} from "../../../utilities/utils";
 import { STATUSES } from "../../../utilities/statuses";
 import { STAGES } from "../../../utilities/stages";
 import { useGetRequestByIdQuery } from "../../../redux/RTKQueries/requestsQuery";
@@ -25,7 +28,7 @@ const errorSchema = yup
   .required();
 
 const NewCourseRequestReview = () => {
-  const currentUserRole = useSelector(selectCurrentUserRole);
+  const currentUserRoles = useSelector(selectCurrentUserRoles);
   const navigate = useNavigate();
   const { currentRequestId } = useParams();
   const { submitUpdatedRequest } = useUpdateRequestByIdApi();
@@ -50,7 +53,7 @@ const NewCourseRequestReview = () => {
     resolver: yupResolver(errorSchema),
   });
 
-  if (currentUserRole !== ROLES.ISD_SUPERVISOR) {
+  if (!doesTheCurrentUserHaveThisRole(currentUserRoles, ROLES.ISD_SUPERVISOR)) {
     return (
       <PageWrapper>
         <div className="access-error-message">

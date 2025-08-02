@@ -1,5 +1,21 @@
 @import '../../styles/variables';
 
+.go-to-dashboard {
+	width: 20rem;
+	height: 2.875rem;
+	border-radius: 4px;
+	background-color: $button-blue-background;
+	color: $font-color-white;
+	font-weight: $fontWeightSemiBold;
+	font-size: $font-size-small;
+	line-height: 140%;
+	margin-top: 2rem;
+
+	&:hover {
+		background-color: darken($button-blue-background, 10%);
+	}
+}
+
 .members {
 	display: flex;
 	flex-direction: column;

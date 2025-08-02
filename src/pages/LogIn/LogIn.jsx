@@ -8,14 +8,20 @@ import { Link } from "react-router-dom";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import {
+  doesTheCurrentUserHaveThisRole,
   MyInput,
-  retrieveRoleFromGetUserRoleResponse,
+  retrieveCompanyIdFromGetUserInfoResponse,
+  retrieveRoleFromGetUserInfoResponse,
 } from "../../utilities/utils";
 import useUserAuthApi from "../../utilities/formPostLogic/userAuthApi";
 import React from "react";
 import { userLoggedIn } from "../../redux/slices/authSlice";
-import { setCurrentUserRole } from "../../redux/slices/currentUserSlice";
+import {
+  setCurrentCompanyId,
+  setCurrentUserRoles,
+} from "../../redux/slices/currentUserSlice";
 import { useLazyGetUserDetailsQuery } from "../../redux/RTKQueries/usersQuery";
+import ROLES from "../../utilities/roles";
 
 const errorSchema = yup
   .object({
@@ -35,15 +41,19 @@ const LogIn = () => {
   const navigate = useNavigate();
   const { submitForm } = useUserAuthApi();
   const [submitError, setSubmitError] = useState(false);
-  const [fetchUserRole] = useLazyGetUserDetailsQuery();
+  const [fetchUserInfo] = useLazyGetUserDetailsQuery();
 
   const submitLogIn = async (data) => {
     try {
       const result = await submitForm("signin", data);
       dispatch(userLoggedIn(result));
-      const response = await fetchUserRole();
-      const userRole = retrieveRoleFromGetUserRoleResponse(response);
-      dispatch(setCurrentUserRole({ role: userRole }));
+      const response = await fetchUserInfo();
+      const userRoles = retrieveRoleFromGetUserInfoResponse(response);
+      dispatch(setCurrentUserRoles({ roles: userRoles }));
+      if (doesTheCurrentUserHaveThisRole(userRoles, ROLES.ADMIN)) {
+        const companyId = retrieveCompanyIdFromGetUserInfoResponse(response);
+        dispatch(setCurrentCompanyId({ companyId: companyId }));
+      }
       navigate("/requests");
     } catch (error) {
       console.log(error);
@@ -81,7 +91,6 @@ const LogIn = () => {
             label="Password"
             type="password"
             placeholder="**"
-            value="12345678Qq!"
             {...register("password")}
           />
           <p>{errors.password?.message}</p>

@@ -14,6 +14,7 @@ import {
   AccountSetUpEmail,
   AccountSetUpNamePassword,
   AccountSetUpCompanyName,
+  AccountSetUpAccountSuccessfullyCreated,
   Users,
   Error,
   TeamMembers,
@@ -68,6 +69,10 @@ function App() {
                 <Route
                   path="/accountsetup/company_name"
                   element={<AccountSetUpCompanyName />}
+                />
+                <Route
+                  path="/accountsetup/account_successfully_created"
+                  element={<AccountSetUpAccountSuccessfullyCreated />}
                 />
                 <Route path="/accountsetup/users" element={<Users />} />
                 <Route

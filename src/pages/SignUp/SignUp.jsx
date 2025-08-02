@@ -9,6 +9,8 @@ import GoogleIcon from "../../assets/icons/google.svg";
 import { MyInput } from "../../utilities/utils";
 import useUserAuthApi from "../../utilities/formPostLogic/userAuthApi";
 import React from "react";
+import { useDispatch } from "react-redux";
+import { userSignedUp } from "../../redux/slices/authSlice";
 
 const errorSchema = yup
   .object({
@@ -55,6 +57,7 @@ const SignUp = () => {
     resolver: yupResolver(errorSchema),
   });
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const { submitForm } = useUserAuthApi();
   const [submitError, setSubmitError] = useState(false);
@@ -64,7 +67,10 @@ const SignUp = () => {
       // Clearing success message if still shown
       setShowSuccessMessage(false);
 
-      await submitForm("register", data);
+      const result = await submitForm("register", data);
+
+      //dispatch userSignedUp to save the token
+      dispatch(userSignedUp(result));
 
       // Showing success message
       setShowSuccessMessage(true);
@@ -76,7 +82,7 @@ const SignUp = () => {
       // Clearing success message
       setTimeout(() => {
         setShowSuccessMessage(false);
-        navigate("/");
+        navigate("/accountsetup/account_successfully_created");
       }, 3000);
     } catch (error) {
       setSubmitError(true);

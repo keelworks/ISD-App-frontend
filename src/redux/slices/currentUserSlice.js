@@ -1,27 +1,38 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-	role: localStorage.getItem('currentUserRole') || null,
+	roles: localStorage.getItem('currentUserRoles') || null,
+	currentCompanyId: localStorage.getItem('currentCompanyId') || null,
 };
 
 const currentUserSlice = createSlice({
 	name: 'currentUser',
 	initialState,
 	reducers: {
-		setCurrentUserRole: (state, action) => {
-			const currentUserRole = action.payload.role;
-			localStorage.setItem('currentUserRole', currentUserRole);
-			state.role = currentUserRole;
+		setCurrentUserRoles: (state, action) => {
+			const currentUserRoles = action.payload.roles;
+			localStorage.setItem('currentUserRoles', currentUserRoles);
+			state.roles = currentUserRoles;
 		},
-		removeCurrentUserRole: (state) => {
-			localStorage.removeItem('currentUserRole');
-			state.role = null;
+		removeCurrentUserRoles: (state) => {
+			localStorage.removeItem('currentUserRoles');
+			state.roles = null;
 		},
+		setCurrentCompanyId: (state, action) => {
+			const companyId = action.payload.companyId;
+			localStorage.setItem('currentCompanyId', companyId);
+			state.currentCompanyId = companyId;
+		},
+		removeCurrentCompanyId: (state) => {
+			localStorage.removeItem('currentCompanyId');
+			state.currentCompanyId = null;
+		}
 	},
 });
 
-export const { setCurrentUserRole, removeCurrentUserRole} = currentUserSlice.actions;
+export const { setCurrentUserRoles, removeCurrentUserRoles, setCurrentCompanyId, removeCurrentCompanyId} = currentUserSlice.actions;
 
-export const selectCurrentUserRole = state => state.currentUser.role;
+export const selectCurrentUserRoles = state => state.currentUser.roles;
+export const selectCurrentCompanyId = state => state.currentUser.currentCompanyId;
 
 export default currentUserSlice.reducer;

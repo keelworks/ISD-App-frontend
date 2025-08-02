@@ -46,7 +46,7 @@ const CourseRequest = () => {
     try {
       const response = await fetchOrganizationId();
       const organizationId =
-        response.data[0].Members[0].Organization.organization_id;
+        response.data.Members[0].Organization.organization_id;
       const dataToSubmit = { organizationId: organizationId, ...data };
       dispatch(requestCreated(dataToSubmit));
       const res = await submitForm(dataToSubmit);
