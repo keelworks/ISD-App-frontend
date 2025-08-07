@@ -10,7 +10,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import {
   doesTheCurrentUserHaveThisRole,
   MyInput,
-  retrieveCompanyIdFromGetUserInfoResponse,
+  retrieveCompanyIdIfUserIsNotAdmin,
+  retrieveCompanyIfUserIsAdmin,
   retrieveRoleFromGetUserInfoResponse,
 } from "../../utilities/utils";
 import useUserAuthApi from "../../utilities/formPostLogic/userAuthApi";
@@ -51,7 +52,10 @@ const LogIn = () => {
       const userRoles = retrieveRoleFromGetUserInfoResponse(response);
       dispatch(setCurrentUserRoles({ roles: userRoles }));
       if (doesTheCurrentUserHaveThisRole(userRoles, ROLES.ADMIN)) {
-        const companyId = retrieveCompanyIdFromGetUserInfoResponse(response);
+        const companyId = retrieveCompanyIfUserIsAdmin(response);
+        dispatch(setCurrentCompanyId({ companyId: companyId }));
+      } else {
+        const companyId = retrieveCompanyIdIfUserIsNotAdmin(response);
         dispatch(setCurrentCompanyId({ companyId: companyId }));
       }
       navigate("/requests");

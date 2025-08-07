@@ -127,8 +127,12 @@ export const retrieveRoleFromGetUserInfoResponse = (response) => {
   return roles;
 };
 
-export const retrieveCompanyIdFromGetUserInfoResponse = (response) => {
+export const retrieveCompanyIfUserIsAdmin = (response) => {
   return response.data.Organizations[0].organization_id;
+};
+
+export const retrieveCompanyIdIfUserIsNotAdmin = (response) => {
+  return response.data.Members[0].Organization.organization_id;
 };
 
 export const doesTheCurrentUserHaveThisRole = (roles, role) => {
