@@ -4,6 +4,9 @@ import SearchResultsList from "../searchComponenets/searchResultsList/SearchResu
 import { useState } from "react";
 import SelectedEmailsContainer from "../searchComponenets/selectedEmailsContainer/SelectedEmailsContainer";
 import { useEffect } from "react";
+import { useGetMembersByOrganizationIdQuery } from "../../../redux/RTKQueries/membersQuery";
+import { useSelector } from "react-redux";
+import { selectCurrentCompanyId } from "../../../redux/slices/currentUserSlice";
 
 const SearchPeopleField = ({
   name,
@@ -15,10 +18,26 @@ const SearchPeopleField = ({
   submitCount,
   peopleRequiredToAttend = [],
   allowOnlyOneToSelect = false,
+  role = "",
 }) => {
   const [searchResults, setSearchResults] = useState([]);
   const [selectedEmails, setSelectedEmails] = useState(peopleRequiredToAttend);
   const [input, setInput] = useState("");
+  const [emails, setEmails] = useState([]);
+  const organizationId = useSelector(selectCurrentCompanyId);
+  const {
+    data: membersByOrganization,
+    isSuccess,
+    isFetching,
+    isError,
+    error,
+  } = useGetMembersByOrganizationIdQuery(organizationId);
+
+  useEffect(() => {
+    if (isFetching === false && isSuccess === true) {
+      setEmails(membersByOrganization.map((member) => member.User.email));
+    }
+  }, [membersByOrganization]);
 
   const capitalizeEveryStringInArray = (array) => {
     const capitalized = array.map((s, i) =>
@@ -33,7 +52,7 @@ const SearchPeopleField = ({
 
   useEffect(() => {
     setValue(nameToRegister, selectedEmails);
-    console.log(submitCount);
+    // console.log(submitCount);
     if (selectedEmails.length === 0 && submitCount > 0) {
       setError(nameToRegister, {
         type: "custom",
@@ -59,6 +78,7 @@ const SearchPeopleField = ({
         input={input}
         setInput={setInput}
         selectedEmails={selectedEmails}
+        emails={emails}
       />
       {searchResults.length > 0 && (
         <SearchResultsList

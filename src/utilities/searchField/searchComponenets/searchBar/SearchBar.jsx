@@ -6,31 +6,48 @@ const SearchBar = ({
   input,
   setInput,
   selectedEmails,
+  emails,
 }) => {
   const fetchUsers = (value) => {
-    fetch("https://jsonplaceholder.typicode.com/users")
-      .then((response) => response.json())
-      .then((json) => {
-        const results = json.filter((user) => {
-          return (
-            value &&
-            user &&
-            user.email &&
-            user.email.toLowerCase().includes(value)
-          );
-        });
+    if (value === "") {
+      setSearchResults([]);
+      return;
+    }
+    const results = emails.filter((email) =>
+      email.toLowerCase().includes(value.toLowerCase())
+    );
+    //remove already selected emails from the list
+    const filteredResults = [...results];
+    selectedEmails.forEach((email) => {
+      const index = filteredResults.findIndex((e) => e === email);
+      filteredResults.splice(index, 1);
+    });
 
-        //remove already selected emails from the list
-        const filteredResults = [...results];
-        selectedEmails.forEach((email) => {
-          const index = filteredResults.findIndex(
-            (person) => person.email === email
-          );
-          filteredResults.splice(index, 1);
-        });
+    setSearchResults(filteredResults);
+    // fetch("https://jsonplaceholder.typicode.com/users")
+    //   .then((response) => response.json())
+    //   .then((json) => {
+    //     const results = json.filter((user) => {
+    //       return (
+    //         value &&
+    //         user &&
+    //         user.email &&
+    //         user.email.toLowerCase().includes(value)
+    //       );
+    //     });
+    //     console.log(results);
 
-        setSearchResults(filteredResults);
-      });
+    //     //remove already selected emails from the list
+    //     const filteredResults = [...results];
+    //     selectedEmails.forEach((email) => {
+    //       const index = filteredResults.findIndex(
+    //         (person) => person.email === email
+    //       );
+    //       filteredResults.splice(index, 1);
+    //     });
+
+    //     setSearchResults(filteredResults);
+    //   });
   };
 
   const handleChange = (value) => {
