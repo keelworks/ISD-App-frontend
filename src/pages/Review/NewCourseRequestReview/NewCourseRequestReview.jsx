@@ -211,7 +211,7 @@ const NewCourseRequestReview = () => {
                         clearErrors={clearErrors}
                         submitCount={submitCount}
                         allowOnlyOneToSelect={true}
-                        // onChange={(e) => handleAssignToOnInput(e)}
+                        role={ROLES.ISD}
                       />
                       <p className="error">{errors.assignTo?.message}</p>
                     </fieldset>
