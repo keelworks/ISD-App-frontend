@@ -44,13 +44,19 @@ export const membersApi = createApi({
 		}),
 		updateRole: builder.mutation({
 			query: memberData => ({
-				url: 'updateRole',
+				url: '/updateRole',
 				method: 'POST',
 				body: memberData,
 			}),
+		}),
+		getMembersByOrganizationIdAndRole: builder.query({
+			query: data => ({
+				url: `/getMembersByRole?organizationId=${data.organizationId}&role=${data.role}`,
+				method: 'GET',
+			})
 		}),
 	}),
 });
 
 // Standard naming convention rtk
-export const { useAddMemberMutation, useGetMembersByOrganizationIdQuery, useLazyGetMembersByOrganizationIdQuery, useRemoveMemberMutation, useUpdateRoleMutation } = membersApi;
+export const { useAddMemberMutation, useGetMembersByOrganizationIdQuery, useLazyGetMembersByOrganizationIdQuery, useRemoveMemberMutation, useUpdateRoleMutation, useGetMembersByOrganizationIdAndRoleQuery } = membersApi;

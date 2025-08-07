@@ -4,9 +4,13 @@ import SearchResultsList from "../searchComponenets/searchResultsList/SearchResu
 import { useState } from "react";
 import SelectedEmailsContainer from "../searchComponenets/selectedEmailsContainer/SelectedEmailsContainer";
 import { useEffect } from "react";
-import { useGetMembersByOrganizationIdQuery } from "../../../redux/RTKQueries/membersQuery";
+import {
+  useGetMembersByOrganizationIdAndRoleQuery,
+  useGetMembersByOrganizationIdQuery,
+} from "../../../redux/RTKQueries/membersQuery";
 import { useSelector } from "react-redux";
 import { selectCurrentCompanyId } from "../../../redux/slices/currentUserSlice";
+import { skipToken } from "@reduxjs/toolkit/query";
 
 const SearchPeopleField = ({
   name,
@@ -25,19 +29,48 @@ const SearchPeopleField = ({
   const [input, setInput] = useState("");
   const [emails, setEmails] = useState([]);
   const organizationId = useSelector(selectCurrentCompanyId);
+
+  // skip this endpoint call if we need to retrieve members with a specific role
   const {
     data: membersByOrganization,
-    isSuccess,
-    isFetching,
-    isError,
-    error,
-  } = useGetMembersByOrganizationIdQuery(organizationId);
+    isSuccess: isSuccessByOrganization,
+    isFetching: isFetchingByOrganization,
+  } = useGetMembersByOrganizationIdQuery(
+    role === "" ? organizationId : skipToken
+  );
+
+  const {
+    data: membersByOrganizationAndRole,
+    isSuccess: isSuccessByOrganizationAndRole,
+    isFetching: isFetchingByOrganizationAndRole,
+  } = useGetMembersByOrganizationIdAndRoleQuery(
+    role !== ""
+      ? {
+          organizationId: organizationId,
+          role: role,
+        }
+      : skipToken
+  );
 
   useEffect(() => {
-    if (isFetching === false && isSuccess === true) {
+    if (
+      isFetchingByOrganization === false &&
+      isSuccessByOrganization === true
+    ) {
       setEmails(membersByOrganization.map((member) => member.User.email));
     }
   }, [membersByOrganization]);
+
+  useEffect(() => {
+    if (
+      isFetchingByOrganizationAndRole === false &&
+      isSuccessByOrganizationAndRole === true
+    ) {
+      setEmails(
+        membersByOrganizationAndRole.members.map((member) => member.User.email)
+      );
+    }
+  }, [membersByOrganizationAndRole]);
 
   const capitalizeEveryStringInArray = (array) => {
     const capitalized = array.map((s, i) =>
