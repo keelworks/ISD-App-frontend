@@ -20,6 +20,8 @@ import { STATUSES } from "../../../utilities/statuses";
 import { STAGES } from "../../../utilities/stages";
 import { useGetRequestByIdQuery } from "../../../redux/RTKQueries/requestsQuery";
 import useUpdateRequestByIdApi from "../../../utilities/formPostLogic/updateRequestByIdApi";
+import { useState } from "react";
+import InformationalPopup from "../../../utilities/isdPagesLogic/isdPagesComponents/popups/informationalPopup/InformationalPopup";
 
 const errorSchema = yup
   .object({
@@ -32,6 +34,7 @@ const NewCourseRequestReview = () => {
   const navigate = useNavigate();
   const { currentRequestId } = useParams();
   const { submitUpdatedRequest } = useUpdateRequestByIdApi();
+  const [showAssignmentPopup, setShowAssignmentPopup] = useState(false);
 
   const {
     data: currentRequest,
@@ -122,10 +125,17 @@ const NewCourseRequestReview = () => {
       console.log(updatedRequest);
 
       const res = await submitUpdatedRequest(updatedRequest);
-      navigate("/requests");
+      
+      // Show informational popup for 3 seconds, then redirect
+      setShowAssignmentPopup(true);
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const handlePopupComplete = () => {
+    setShowAssignmentPopup(false);
+    navigate("/requests");
   };
 
   if (isLoading) {
@@ -204,7 +214,7 @@ const NewCourseRequestReview = () => {
                     </header>
                     <fieldset>
                       <SearchPeopleField
-                        name="assign_to"
+                        name="assignTo"
                         register={register}
                         setValue={setValue}
                         setError={setError}
@@ -221,6 +231,12 @@ const NewCourseRequestReview = () => {
             </main>
           </div>
         </div>
+        <InformationalPopup 
+          isVisible={showAssignmentPopup}
+          message="The request has been assigned."
+          duration={3000}
+          onComplete={handlePopupComplete}
+        />
       </PageWrapper>
     );
   }
