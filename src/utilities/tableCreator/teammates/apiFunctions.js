@@ -1,12 +1,13 @@
-export const deleteMember = async (e, cell, setMembers, data, organizationId, removeMember) => {
+export const deleteMember = async (e, cell, setMembers, data, organizationId, removeMember, updateAdminRoleInTheStore) => {
 	try {
 		e.stopPropagation();
 
 		const memberId = cell.row.original.id;
-		const memberToDelete = data.filter(member => member.id === memberId)
+		const memberToDelete = data.filter(member => member.id === memberId);
 		const memberToDeleteData = {memberId: memberToDelete[0].id, userId: memberToDelete[0].userId, organizationId: organizationId };
 
 		const result = await removeMember(memberToDeleteData);
+		updateAdminRoleInTheStore(memberToDelete[0]);
 
 		// We directly edit the array, so there is no need to refetch the members
 		setMembers(prevMembers =>
