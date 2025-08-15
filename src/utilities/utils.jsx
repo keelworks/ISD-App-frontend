@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { useSelector } from "react-redux";
-import { selectCurrentUserRoles } from "../redux/slices/currentUserSlice";
+import { setCurrentUserRoles } from "../redux/slices/currentUserSlice";
 
 export const MyInput = React.forwardRef(
   ({ name, id, type, label, classNameForLabel, ...rest }, ref) => {
@@ -149,4 +148,16 @@ export const transformMembersData = (members) => {
     email: member.User.email,
     userId: member.user_id,
   }));
+};
+
+// stop async functions for ms milliseconds
+export const delay = (ms) => {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+};
+
+// to mame sure the admin roles are up-to-date, retrieve them from backend and save in the store
+export const retrieveAndSaveAdminRoles = async (fetchUserInfo, dispatch) => {
+  const userInfo = await fetchUserInfo();
+  const roles = retrieveRoleFromGetUserInfoResponse(userInfo);
+  dispatch(setCurrentUserRoles({ roles: roles }));
 };
