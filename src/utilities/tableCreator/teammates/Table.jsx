@@ -18,9 +18,13 @@ import {
   useRemoveMemberMutation,
   useUpdateRoleMutation,
 } from "../../../redux/RTKQueries/membersQuery";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { selectCurrentCompanyId } from "../../../redux/slices/currentUserSlice";
-import { transformMembersData } from "../../utils";
+import { retrieveAndSaveAdminRoles, transformMembersData } from "../../utils";
+import {
+  useGetUserDetailsQuery,
+  useLazyGetUserDetailsQuery,
+} from "../../../redux/RTKQueries/usersQuery";
 
 const Table = ({ tableData, setMembers }) => {
   const [data, setData] = useState([]);
@@ -39,6 +43,9 @@ const Table = ({ tableData, setMembers }) => {
     isFetching,
     isSuccess,
   } = useGetMembersByOrganizationIdQuery(organizationId);
+  const { data: adminOfOrganizationInfo } = useGetUserDetailsQuery();
+  const [fetchUserInfo] = useLazyGetUserDetailsQuery();
+  const dispatch = useDispatch();
   let errors = {};
 
   useEffect(() => {
@@ -58,9 +65,16 @@ const Table = ({ tableData, setMembers }) => {
         userId: member.userId,
         newRole: member.role,
       });
+      updateAdminRoleInTheStore(member);
       setMembers(members);
     } catch (error) {
       console.error(error);
+    }
+  };
+
+  const updateAdminRoleInTheStore = async (member) => {
+    if (adminOfOrganizationInfo.email === member.email) {
+      await retrieveAndSaveAdminRoles(fetchUserInfo, dispatch);
     }
   };
 
@@ -201,7 +215,8 @@ const Table = ({ tableData, setMembers }) => {
                 setMembers,
                 data,
                 organizationId,
-                removeMember
+                removeMember,
+                updateAdminRoleInTheStore
               );
             }}
           />

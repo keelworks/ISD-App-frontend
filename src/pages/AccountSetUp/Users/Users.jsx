@@ -5,12 +5,9 @@ import ROLES from "../../../utilities/roles";
 import useAddMemberApi from "../../../utilities/formPostLogic/addMemberApi";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  selectCurrentCompanyId,
-  setCurrentUserRoles,
-} from "../../../redux/slices/currentUserSlice";
+import { selectCurrentCompanyId } from "../../../redux/slices/currentUserSlice";
 import { useLazyGetUserDetailsQuery } from "../../../redux/RTKQueries/usersQuery";
-import { retrieveRoleFromGetUserInfoResponse } from "../../../utilities/utils";
+import submitNewMembers from "../../../utilities/modals/TeammatesModal/submitNewMembers";
 
 const AccountSetUpUsers = () => {
   const options = [
@@ -27,30 +24,60 @@ const AccountSetUpUsers = () => {
   const dispatch = useDispatch();
   const organizationId = useSelector(selectCurrentCompanyId);
   const [fetchUserInfo] = useLazyGetUserDetailsQuery();
+  const [successMessages, setSuccessMessages] = useState([]);
+  const [errorMessages, setErrorMessages] = useState([]);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const sendInvitations = async (data) => {
+    setIsSubmitting(true);
+
+    // Add organizationId to our data
+    const dataToSubmit = data.map((member) => ({
+      organizationId: organizationId,
+      ...member,
+    }));
+
     try {
-      // Add organizationId to our data
-      const dataToSubmit = data.map((member) => ({
-        organizationId: organizationId,
-        ...member,
-      }));
-
-      // Submit each member
-      const promises = dataToSubmit.map(
-        async (member) => await inviteMember(member)
+      await submitNewMembers(
+        dataToSubmit,
+        inviteMember,
+        setSuccessMessages,
+        setErrorMessages,
+        fetchUserInfo,
+        dispatch
       );
-      const results = await Promise.all(promises);
+      // // Submit each member
+      // const promises = dataToSubmit.map(
+      //   async (member) => await inviteMember(member)
+      // );
+      // const results = await Promise.allSettled(promises);
 
-      // Update roles for Admin
-      const userInfo = await fetchUserInfo();
-      const roles = retrieveRoleFromGetUserInfoResponse(userInfo);
-      dispatch(setCurrentUserRoles({ roles: roles }));
+      // // Set info and error messages
+      // const successMsgs = [];
+      // const errorMsgs = [];
+      // results.forEach((result) => {
+      //   if (result.status === "fulfilled") {
+      //     successMsgs.push(result.value.message);
+      //   }
+      //   if (result.status === "rejected") {
+      //     errorMsgs.push(result.reason.data.error);
+      //   }
+      // });
+      // setSuccessMessages(successMsgs);
+      // setErrorMessages(errorMsgs);
+
+      // // Update roles for Admin
+      // const userInfo = await fetchUserInfo();
+      // const roles = retrieveRoleFromGetUserInfoResponse(userInfo);
+      // dispatch(setCurrentUserRoles({ roles: roles }));
+
+      // await delay(4000);
 
       navigate("/members");
     } catch (error) {
-      console.log(error);
+      setErrorMessages([...errorMessages, error.data.error]);
     }
+    setIsSubmitting(false);
   };
 
   const [invitations, setInvitations] = useState([
@@ -147,27 +174,47 @@ const AccountSetUpUsers = () => {
           align={"center"}
           justify={"space-between"}
         >
-          <label
+          <button
+            className="add-teammates-button"
             onClick={addTeammates}
-            style={{
-              cursor: "pointer",
-              color: "#0774c3",
-            }}
+            disabled={isSubmitting}
+            type="button"
           >
             + Add teammates
-          </label>
-          <label
+          </button>
+          <button
+            className="remove-teammates-button"
             onClick={removeTeammates}
             style={{
               cursor: invitations.length > 1 ? "pointer" : "not-allowed",
               color: invitations.length > 1 ? "red" : "gray",
             }}
+            disabled={isSubmitting}
+            type="button"
           >
             -Remove teammates
-          </label>
+          </button>
         </Flex>
+        {successMessages && (
+          <div className="success-message-teammates">
+            {successMessages.map((message, i) => (
+              <div key={i}>{message}</div>
+            ))}
+          </div>
+        )}
+        {errorMessages && (
+          <div className="error-message-teammates">
+            {errorMessages.map((error, i) => (
+              <div key={i}>{error}</div>
+            ))}
+          </div>
+        )}
         <div className="button-container">
-          <button type="submit" className="button signup">
+          <button
+            type="submit"
+            className="button signup"
+            disabled={isSubmitting}
+          >
             Invite all
           </button>
         </div>

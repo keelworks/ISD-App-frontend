@@ -1,5 +1,26 @@
 @import './variables';
 
+button[type=submit]:disabled {
+	background-color: #808080 !important;
+	color: #fff !important;
+	cursor: not-allowed !important;
+}
+
+button[type=button]:disabled {
+	cursor: not-allowed !important;
+    color: gray !important;
+}
+
+.success-message-teammates {
+	color: green;
+	text-align: center;
+}
+
+.error-message-teammates {
+	color: red;
+	text-align: center;
+}
+
 .form-container {
 	color: $font-color-black;
 	font-family: 'Inter', system-ui, Avenir, Helvetica, Arial, sans-serif;
