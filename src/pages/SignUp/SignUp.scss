@@ -29,12 +29,6 @@
 				transition-duration: 0.3s;
 				box-sizing: border-box;
 				padding: 12px 0px;
-
-				&:disabled {
-					background-color: #808080 !important;
-					color: #fff !important;
-					cursor: not-allowed !important;
-				}
 			}
 
 			.google-login {

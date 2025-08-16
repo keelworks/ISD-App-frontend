@@ -10,8 +10,10 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import formDataFormatter from "./formDataFormatter";
 import options from "../../../pages/TeamMembers/options";
 import useAddMemberApi from "../../formPostLogic/addMemberApi";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { selectCurrentCompanyId } from "../../../redux/slices/currentUserSlice";
+import submitNewMembers from "./submitNewMembers";
+import { useLazyGetUserDetailsQuery } from "../../../redux/RTKQueries/usersQuery";
 
 const customStyles = {
   content: {
@@ -64,13 +66,16 @@ const generateValidationSchema = (objectKeys) => {
 };
 
 const TeammatesModal = ({ isModalOpen, setIsModalOpen, setMembers, data }) => {
-  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
-  const [submitError, setSubmitError] = useState(false);
-  const [addCount, setAddCount] = useState([
+  const initialSetCountState = [
     { name: "", email: "", role: "", id: uuidv4() },
-  ]);
+  ];
+  const [addCount, setAddCount] = useState(initialSetCountState);
   const { inviteMember } = useAddMemberApi();
   const organizationId = useSelector(selectCurrentCompanyId);
+  const [successMessages, setSuccessMessages] = useState([]);
+  const [errorMessages, setErrorMessages] = useState([]);
+  const [fetchUserInfo] = useLazyGetUserDetailsQuery();
+  const dispatch = useDispatch();
 
   const closeModal = () => {
     setIsModalOpen(false);
@@ -95,22 +100,20 @@ const TeammatesModal = ({ isModalOpen, setIsModalOpen, setMembers, data }) => {
       newMemberEmail: member.email,
     }));
 
-    //! Updating local state we need to add api post call to update data later
     try {
-      // Clearing success message if still shown
-      setShowSuccessMessage(false);
-      setSubmitError(false);
-
-      // Submit each member
-      const promises = dataToSubmit.map(
-        async (member) => await inviteMember(member)
+      await submitNewMembers(
+        dataToSubmit,
+        inviteMember,
+        setSuccessMessages,
+        setErrorMessages,
+        fetchUserInfo,
+        dispatch
       );
-      const results = await Promise.all(promises);
 
-      setShowSuccessMessage(true);
       setIsModalOpen(false);
+      setAddCount(initialSetCountState);
     } catch (error) {
-      setSubmitError(true);
+      setErrorMessages([...errorMessages, error.data.error]);
     }
     reset();
   };
@@ -137,6 +140,11 @@ const TeammatesModal = ({ isModalOpen, setIsModalOpen, setMembers, data }) => {
   useEffect(() => {
     console.log(errors, "errors");
   }, [errors]);
+
+  useEffect(() => {
+    setErrorMessages([]);
+    setSuccessMessages([]);
+  }, [isModalOpen]);
 
   return (
     <>
@@ -187,9 +195,11 @@ const TeammatesModal = ({ isModalOpen, setIsModalOpen, setMembers, data }) => {
 
                   <fieldset>
                     <div className="form-input remove-box">
-                      <label
+                      <button
                         onClick={(e) => removeTeammates(e, item)}
                         className="remove-teammates"
+                        type="button"
+                        disabled={isSubmitting}
                       >
                         <img
                           src={Delete}
@@ -199,7 +209,7 @@ const TeammatesModal = ({ isModalOpen, setIsModalOpen, setMembers, data }) => {
                               addCount.length > 1 ? "pointer" : "not-allowed",
                           }}
                         />
-                      </label>
+                      </button>
                     </div>
                   </fieldset>
                 </div>
@@ -211,16 +221,34 @@ const TeammatesModal = ({ isModalOpen, setIsModalOpen, setMembers, data }) => {
               align={"center"}
               justify={"space-between"}
             >
-              <label
+              <button
                 onClick={(e) => addTeammates(e)}
                 style={{
                   cursor: "pointer",
                   color: "#0774c3",
+                  background: "none",
+                  border: "0px",
                 }}
+                type="button"
+                disabled={isSubmitting}
               >
                 + Add teammates
-              </label>
+              </button>
             </div>
+            {successMessages && (
+              <div className="success-message-teammates">
+                {successMessages.map((message, i) => (
+                  <div key={i}>{message}</div>
+                ))}
+              </div>
+            )}
+            {errorMessages && (
+              <div className="error-message-teammates">
+                {errorMessages.map((error, i) => (
+                  <div key={i}>{error}</div>
+                ))}
+              </div>
+            )}
             <div className="button-container">
               <button
                 type="submit"
@@ -231,16 +259,6 @@ const TeammatesModal = ({ isModalOpen, setIsModalOpen, setMembers, data }) => {
               </button>
             </div>
           </form>
-          {/* Can replace later for default loading and submission success messages */}
-          {isSubmitting && <div className="loading-message">Loading...</div>}
-          {submitError && (
-            <p className="error-message">
-              There was an error adding teammates.
-            </p>
-          )}
-          {showSuccessMessage && (
-            <p className="success-message">Teammates have been added!</p>
-          )}
         </div>
       </Modal>
     </>
