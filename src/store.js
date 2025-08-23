@@ -11,6 +11,7 @@ import { requestsApi } from './redux/RTKQueries/requestsQuery';
 import { usersApi } from './redux/RTKQueries/usersQuery';
 import { companyApi } from './redux/RTKQueries/companyQuery';
 import { membersApi } from './redux/RTKQueries/membersQuery';
+import authInterceptor from './redux/middleware/authInterceptor';
 
 const store = configureStore({
 	reducer: {
@@ -32,6 +33,7 @@ const store = configureStore({
 			usersApi.middleware,
 			companyApi.middleware,
 			membersApi.middleware,
+			authInterceptor,
 		),
 });
 
